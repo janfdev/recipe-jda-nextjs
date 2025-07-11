@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, CirclePlay } from "lucide-react";
@@ -16,8 +18,6 @@ const Hero = () => {
             Welcome to JanfLog – Your Personal Tech Blog
           </h1>
           <p className="mt-6 max-w-[60ch] text-lg">
-            {/* Write, manage, and publish your thoughts, tutorials, and tech
-            stories with ease. Built with Next.js App Router and Shadcn UI. */}
             Write, manage, and publish your thoughts, tutorials, and technology
             stories with ease. Built with enjoy and happiness.
           </p>

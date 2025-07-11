@@ -1,34 +1,35 @@
+"use client";
+
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Button, buttonVariants } from "@/components/ui/button";
-import ModeToggle from "./mode-toggle";
+import ModeToggle from "../theme/mode-toggle";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
+  SheetTrigger
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Suspense } from "react";
 import Image from "next/image";
+import { TopMenuTypes } from "@/lib/types/type";
 
-const TopMenu = [
-  { name: "Features", href: "#features" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "FAQ", href: "#faq" },
+const TopMenu: TopMenuTypes[] = [
+  { name: "Browse", href: "/recipes" },
+  { name: "Trending", href: "/recipes/trending" },
+  { name: "FAQ", href: "#faq" }
 ];
 
 export default function Navbar() {
   return (
     <header className="sticky top-5 z-50 flex justify-center container">
-      <div className="min-w-full border rounded-md  w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2.5 px-4">
+      <div className="min-w-full border rounded-md w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2.5 px-4">
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-1">
-              {/* <Rocket size={32} strokeWidth={2.7} />
-              <span className="text-xl font-bold">StarterBlocks</span> */}
               <Image src={"../logo.svg"} alt="logo" width={100} height={100} />
             </Link>
           </div>
@@ -93,7 +94,7 @@ export default function Navbar() {
                   {TopMenu.map((menu, idx) => (
                     <a
                       key={idx}
-                      href="#"
+                      href={menu.href}
                       className="font-semibold text-lg py-2"
                     >
                       {menu.name}
