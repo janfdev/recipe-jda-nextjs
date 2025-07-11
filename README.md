@@ -1,2 +1,1 @@
-# Projectnya masih kosongan
-## besok nyicil 🙏
+# Project Jabar Digital Academy
