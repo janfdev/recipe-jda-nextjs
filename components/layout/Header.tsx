@@ -3,6 +3,7 @@
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Button, buttonVariants } from "@/components/ui/button";
 import ModeToggle from "../theme/mode-toggle";
+import Logo from "@/public/logo.svg";
 import {
   Sheet,
   SheetContent,
@@ -19,18 +20,18 @@ import { TopMenuTypes } from "@/lib/types/type";
 
 const TopMenu: TopMenuTypes[] = [
   { name: "Browse", href: "/recipes" },
-  { name: "Trending", href: "/recipes/trending" },
+  { name: "Category", href: "/recipes/category" },
   { name: "FAQ", href: "#faq" }
 ];
 
-export default function Navbar() {
+export default function Header() {
   return (
     <header className="sticky top-5 z-50 flex justify-center container">
       <div className="min-w-full border rounded-md w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2.5 px-4">
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-1">
-              <Image src={"../logo.svg"} alt="logo" width={100} height={100} />
+              <Image src={Logo} alt="logo" width={100} height={100} />
             </Link>
           </div>
           <div className="items-center flex gap-6">
@@ -51,14 +52,14 @@ export default function Navbar() {
             <Suspense>
               <ModeToggle />
             </Suspense>
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               <Link
                 href="/login"
                 className={buttonVariants({ variant: "default" })}
               >
                 Get Started
               </Link>
-            </div>
+            </div> */}
           </div>
         </nav>
 
@@ -66,7 +67,7 @@ export default function Navbar() {
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-1">
-              <Image src={"../logo.svg"} alt="logo" width={100} height={100} />
+              <Image src={Logo} alt="logo" width={100} height={100} />
             </Link>
 
             <Sheet>
@@ -79,14 +80,7 @@ export default function Navbar() {
                 <SheetHeader>
                   <SheetTitle>
                     <Link href="/" className="flex items-center gap-1">
-                      {/* <Rocket size={32} strokeWidth={2.7} />
-                      <span className="text-xl font-bold">StarterBlocks</span> */}
-                      <Image
-                        src={"../logo.svg"}
-                        alt="logo"
-                        width={100}
-                        height={100}
-                      />
+                      <Image src={Logo} alt="logo" width={100} height={100} />
                     </Link>
                   </SheetTitle>
                 </SheetHeader>
@@ -101,13 +95,16 @@ export default function Navbar() {
                     </a>
                   ))}
                 </div>
+                <Suspense>
+                  <ModeToggle />
+                </Suspense>
                 <div className="border-t pt-4">
                   <div className="mt-2 flex flex-col gap-2">
                     <Link
-                      href="/login"
+                      href="/recipes"
                       className={buttonVariants({ variant: "default" })}
                     >
-                      Get Started
+                      Browse Recipe
                     </Link>
                   </div>
                 </div>

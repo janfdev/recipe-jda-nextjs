@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -6,7 +8,7 @@ import { RecipeBlog } from "@/lib/data/data";
 
 const RecipeSection = () => {
   return (
-    <div className="px-4 py-8 md:py-16 max-w-7xl mx-auto" id="recipes">
+    <div className="px-4 py-8 md:py-16 max-w-7xl mx-auto">
       <div className="flex flex-col">
         <div className="flex items-center justify-between pb-4">
           <h2 className="text-2xl flex items-start justify-items-start ">

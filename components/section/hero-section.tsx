@@ -2,36 +2,32 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, CirclePlay } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-screen-xl w-full mx-auto grid lg:grid-cols-2 gap-12 px-6 py-12">
         <div>
-          <Badge className="bg-gradient-to-br text-dark dark:text-white via-70% from-primary via-muted/30 to-primary rounded-full py-1 border-none">
-            📘 Blog Platform v1.0
+          <Badge className="bg-primary rounded-full py-1 border-none">
+            🍽️ Resep Rumahan
           </Badge>
           <h1 className="mt-6 max-w-[17ch] text-4xl md:text-5xl lg:text-[2.75rem] xl:text-5xl font-bold !leading-[1.2]">
-            Welcome to JanfLog – Your Personal Tech Blog
+            Temukan Resep Makanan Favorit Keluarga
           </h1>
           <p className="mt-6 max-w-[60ch] text-lg">
-            Write, manage, and publish your thoughts, tutorials, and technology
-            stories with ease. Built with enjoy and happiness.
+            Mulai dari makanan tradisional hingga dessert modern, semua bisa
+            kamu temukan di sini. Gratis, mudah, dan praktis!
           </p>
           <div className="mt-12 flex items-center gap-4">
-            <Button size="lg" className="rounded-full text-base">
-              Get Started <ArrowUpRight className="!h-5 !w-5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-full text-base shadow-none"
-            >
-              <CirclePlay className="!h-5 !w-5" /> Watch Demo
-            </Button>
+            <Link href={"/recipes"}>
+              <Button size="lg" className="rounded-full text-base">
+                Get Started <ArrowUpRight className="!h-5 !w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
         {/* <div className="w-full aspect-video bg-accent rounded-xl" /> */}
