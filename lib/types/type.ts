@@ -27,3 +27,8 @@ export interface RecipeBlogTypes {
   instruction: Instructions[];
   image: string | StaticImageData;
 }
+
+export type CategoryTypes = {
+  id: number;
+  name: string;
+};
