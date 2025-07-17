@@ -10,8 +10,12 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     image: HeroImage,
     ingredients: [
-      { id: 1, ingredient: "2 sendok gula" },
-      { id: 2, ingredient: "1 cup susu" }
+      { 
+        id: 1, ingredient: "2 sendok gula" 
+      },
+      { 
+        id: 2, ingredient: "1 cup susu"
+      }
     ],
     instruction: [
       { id: 1, step: "Campurkan semua bahan." },
@@ -122,4 +126,3 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     ]
   }
 ];
-

@@ -1,7 +1,10 @@
-"use client";
-
-const CategoryPage = () => {
-  return <div>this is Category page recipe</div>;
-};
+async function CategoryPage() {
+  return (
+    <div>
+      <h1>Category Page</h1>
+      {}
+    </div>
+  );
+}
 
 export default CategoryPage;
