@@ -39,3 +39,9 @@ export type LoadingState = {
   edit: boolean;
   delete: boolean;
 };
+
+export type Context = {
+  params: {
+    id: string;
+  };
+};

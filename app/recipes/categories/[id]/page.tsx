@@ -1,9 +1,13 @@
 export default async function Page({
   params
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
 
-  return <h1>ID : {id}</h1>;
+  return (
+    <div>
+      <h1>ID : {id}</h1>
+    </div>
+  );
 }
