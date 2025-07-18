@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, UtensilsCrossed } from "lucide-react";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,8 +12,9 @@ const Hero = () => {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-screen-xl w-full mx-auto grid lg:grid-cols-2 gap-12 px-6 py-12">
         <div>
-          <Badge className="bg-primary rounded-full py-1 border-none">
-            🍽️ Resep Rumahan
+          <Badge className="bg-primary rounded-full py-1 border-none flex items-center gap-1">
+            <UtensilsCrossed />
+            <p>Resep Rumahan</p>
           </Badge>
           <h1 className="mt-6 max-w-[17ch] text-4xl md:text-5xl lg:text-[2.75rem] xl:text-5xl font-bold !leading-[1.2]">
             Temukan Resep Makanan Favorit Keluarga

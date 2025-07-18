@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { categories } from "@/lib/data/data";
+
 async function findCategory(id: number) {
   return categories.find((c) => c.id === id);
 }
