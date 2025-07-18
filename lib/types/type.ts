@@ -32,3 +32,10 @@ export type CategoryTypes = {
   id: number;
   name: string;
 };
+
+export type LoadingState = {
+  fetch: boolean;
+  add: boolean;
+  edit: boolean;
+  delete: boolean;
+};

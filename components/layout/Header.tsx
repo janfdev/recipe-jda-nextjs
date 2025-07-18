@@ -20,7 +20,7 @@ import { TopMenuTypes } from "@/lib/types/type";
 
 const TopMenu: TopMenuTypes[] = [
   { name: "Browse", href: "/recipes" },
-  { name: "Category", href: "/recipes/category" },
+  { name: "Categories", href: "/recipes/categories" },
   { name: "FAQ", href: "#faq" }
 ];
 

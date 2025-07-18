@@ -1,5 +1,5 @@
 import HeroImage from "@/public/hero-image.jpg";
-import { RecipeBlogTypes } from "../types/type";
+import { CategoryTypes, RecipeBlogTypes } from "../types/type";
 
 export const RecipeBlog: RecipeBlogTypes[] = [
   {
@@ -10,11 +10,13 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     image: HeroImage,
     ingredients: [
-      { 
-        id: 1, ingredient: "2 sendok gula" 
+      {
+        id: 1,
+        ingredient: "2 sendok gula"
       },
-      { 
-        id: 2, ingredient: "1 cup susu"
+      {
+        id: 2,
+        ingredient: "1 cup susu"
       }
     ],
     instruction: [
@@ -124,5 +126,16 @@ export const RecipeBlog: RecipeBlogTypes[] = [
       { id: 1, step: "Bakar ikan hingga matang." },
       { id: 2, step: "Sajikan dengan sambal kecap." }
     ]
+  }
+];
+
+export const categories: CategoryTypes[] = [
+  {
+    id: 1,
+    name: "Dinner"
+  },
+  {
+    id: 2,
+    name: "Dessert"
   }
 ];

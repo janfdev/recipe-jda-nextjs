@@ -19,7 +19,7 @@ export default function RecipesDetail({
   if (!recipe) return notFound();
 
   return (
-    <div className="py-4 px-4 min-h-screen flex flex-col max-w-7xl mx-auto bg-background">
+    <main className="py-4 px-4 min-h-screen flex flex-col max-w-7xl mx-auto bg-background">
       <div>
         <Header />
       </div>
@@ -116,6 +116,6 @@ export default function RecipesDetail({
           </div>
         </div>
       </main>
-    </div>
+    </main>
   );
 }
