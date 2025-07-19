@@ -1,28 +1,12 @@
 # Project Jabar Digital Academy
 ## Tugas 5
 
-Berikut contoh file `README.md` lengkap dan profesional, yang:
-
-* Menjelaskan bahwa pengguna perlu membuat file `.env`
-* Menyediakan contoh langsung yang bisa di-*copy-paste*
-* Cocok untuk proyek Next.js + Prisma + PostgreSQL
-
----
-
-### 📄 Contoh `README.md`
-
-````md
-# 📦 Recipe App JDA
-
-A modern recipe application using **Next.js**, **Prisma**, and **PostgreSQL** — built with developer experience and scalability in mind.
-
----
-
 ## 🚀 Getting Started
 
 Ikuti langkah-langkah berikut untuk menjalankan proyek ini secara lokal:
 
 ### 1. Clone repository
+
 ```bash
 git clone https://github.com/janfdev/recipe-jda-nextjs.git
 cd recipe-app-jda
