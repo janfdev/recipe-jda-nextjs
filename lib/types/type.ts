@@ -29,7 +29,7 @@ export interface RecipeBlogTypes {
 }
 
 export type CategoryTypes = {
-  id: number;
+  id: string;
   name: string;
 };
 

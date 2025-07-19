@@ -66,7 +66,7 @@ export default function CategoriesPage() {
     }
   };
 
-  const editCategory = async (id: number, currentName: string) => {
+  const editCategory = async (id: string, currentName: string) => {
     const editName = prompt("Enter new name", currentName);
     if (!editName?.trim()) return;
 
@@ -95,7 +95,7 @@ export default function CategoriesPage() {
     }
   };
 
-  const deleteCategory = async (id: number) => {
+  const deleteCategory = async (id: string) => {
     if (!confirm("Are you sure you want to delete this category?")) return;
 
     setIsLoading((prev) => ({ ...prev, delete: true }));

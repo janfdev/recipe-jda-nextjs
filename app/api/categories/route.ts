@@ -1,28 +1,42 @@
+import prisma from "@/lib/prisma";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { categories } from "@/lib/data/data";
 
 export async function GET() {
-  return NextResponse.json(
-    {
-      success: true,
-      data: categories
-    },
-    {
-      status: 200
-    }
-  );
+  try {
+    const categories = await prisma.category.findMany({
+      orderBy: { id: "asc" }
+    });
+    return NextResponse.json(
+      {
+        success: true,
+        data: categories
+      },
+      {
+        status: 200
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Failed to fetch"
+      },
+      {
+        status: 500
+      }
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const newCategory = {
-      id: Date.now(),
-      name: body.name
-    };
+    const { name } = await request.json();
+    const newCategory = await prisma.category.create({
+      data: { name }
+    });
 
-    categories.push(newCategory);
     return NextResponse.json(
       {
         success: true,
@@ -40,7 +54,7 @@ export async function POST(request: NextRequest) {
         error: "POST data failed"
       },
       {
-        status: 401
+        status: 500
       }
     );
   }

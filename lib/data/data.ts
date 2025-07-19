@@ -131,11 +131,11 @@ export const RecipeBlog: RecipeBlogTypes[] = [
 
 export const categories: CategoryTypes[] = [
   {
-    id: 1,
+    id: "1",
     name: "Dinner"
   },
   {
-    id: 2,
+    id: "2",
     name: "Dessert"
   }
 ];
