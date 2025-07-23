@@ -3,7 +3,7 @@
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Button, buttonVariants } from "@/components/ui/button";
 import ModeToggle from "../theme/mode-toggle";
-import Logo from "@/public/logo.svg";
+import { Hamburger } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -15,7 +15,6 @@ import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Suspense } from "react";
-import Image from "next/image";
 import { TopMenuTypes } from "@/lib/types/type";
 
 const TopMenu: TopMenuTypes[] = [
@@ -31,7 +30,8 @@ export default function Header() {
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-1">
-              <Image src={Logo} alt="logo" width={100} height={100} />
+              <Hamburger />
+              <span className="text-lg font-semibold">ReciVerse</span>
             </Link>
           </div>
           <div className="items-center flex gap-6">
@@ -67,7 +67,8 @@ export default function Header() {
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-1">
-              <Image src={Logo} alt="logo" width={100} height={100} />
+              <Hamburger />
+              <span className="text-lg font-semibold">ReciVerse</span>
             </Link>
 
             <Sheet>
@@ -80,7 +81,8 @@ export default function Header() {
                 <SheetHeader>
                   <SheetTitle>
                     <Link href="/" className="flex items-center gap-1">
-                      <Image src={Logo} alt="logo" width={100} height={100} />
+                      <Hamburger />
+                      <span className="text-lg font-semibold">ReciVerse</span>
                     </Link>
                   </SheetTitle>
                 </SheetHeader>

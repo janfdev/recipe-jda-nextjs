@@ -1,5 +1,6 @@
 import HeroImage from "@/public/hero-image.jpg";
 import { CategoryTypes, RecipeBlogTypes } from "../types/type";
+import { Album, Home, Panda } from "lucide-react";
 
 export const RecipeBlog: RecipeBlogTypes[] = [
   {
@@ -137,5 +138,23 @@ export const categories: CategoryTypes[] = [
   {
     id: "2",
     name: "Dessert"
+  }
+];
+
+export const navItemsDashboard = [
+  {
+    title: "Home",
+    url: "/admin/dashboard",
+    icon: Home
+  },
+  {
+    title: "Recipes",
+    url: "/admin/dashboard/recipes",
+    icon: Album
+  },
+  {
+    title: "Categories",
+    url: "/admin/dashboard/categories",
+    icon: Panda
   }
 ];
