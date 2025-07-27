@@ -1,5 +1,6 @@
 import HeroImage from "@/public/hero-image.jpg";
-import { RecipeBlogTypes } from "../types/type";
+import { CategoryTypes, RecipeBlogTypes } from "../types/type";
+import { Album, Home, Panda } from "lucide-react";
 
 export const RecipeBlog: RecipeBlogTypes[] = [
   {
@@ -10,8 +11,14 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     image: HeroImage,
     ingredients: [
-      { id: 1, ingredient: "2 sendok gula" },
-      { id: 2, ingredient: "1 cup susu" }
+      {
+        id: 1,
+        ingredient: "2 sendok gula"
+      },
+      {
+        id: 2,
+        ingredient: "1 cup susu"
+      }
     ],
     instruction: [
       { id: 1, step: "Campurkan semua bahan." },
@@ -123,3 +130,31 @@ export const RecipeBlog: RecipeBlogTypes[] = [
   }
 ];
 
+export const categories: CategoryTypes[] = [
+  {
+    id: "1",
+    name: "Dinner"
+  },
+  {
+    id: "2",
+    name: "Dessert"
+  }
+];
+
+export const navItemsDashboard = [
+  {
+    title: "Home",
+    url: "/admin/dashboard",
+    icon: Home
+  },
+  {
+    title: "Recipes",
+    url: "/admin/dashboard/recipes",
+    icon: Album
+  },
+  {
+    title: "Categories",
+    url: "/admin/dashboard/categories",
+    icon: Panda
+  }
+];

@@ -27,3 +27,21 @@ export interface RecipeBlogTypes {
   instruction: Instructions[];
   image: string | StaticImageData;
 }
+
+export type CategoryTypes = {
+  id: string;
+  name: string;
+};
+
+export type LoadingState = {
+  fetch: boolean;
+  add: boolean;
+  edit: boolean;
+  delete: boolean;
+};
+
+export type Context = {
+  params: {
+    id: string;
+  };
+};

@@ -1,13 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const TrendSectionPage = () => {
+const CategorySectionPage = () => {
   return (
     <div>
-        <div>
-            
-        </div>
+      <div></div>
     </div>
-  )
-}
+  );
+};
 
-export default TrendSectionPage;
+export default CategorySectionPage;
