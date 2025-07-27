@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "./theme-provider";
 import { ToastContainer } from "react-toastify";
+import NextAuthSession from "./NextAuthSession";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ToastContainer />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <NextAuthSession>{children}</NextAuthSession>
+        </ThemeProvider>
       </body>
     </html>
   );

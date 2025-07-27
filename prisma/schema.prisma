@@ -2,12 +2,99 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator ts {
+  provider = "ts-node"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model Category {
-  id    String  @id @default(cuid())
-  name  String  @unique
+enum Role {
+  ADMIN
+  USER
 }
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  password      String?
+  role          Role           @default(USER)
+  savedRecipes  SavedRecipe[]
+  comments      Comment[]
+}
+
+model Recipe {
+  id            String         @id @default(cuid())
+  title         String
+  description   String
+  image         String         // URL dari Cloudinary
+  date          DateTime       @default(now())
+  categoryId    String
+  category      Category       @relation(fields: [categoryId], references: [id])
+  ingredients   Ingredient[]
+  instructions  Instruction[]
+  tags          RecipeTag[]
+  savedBy       SavedRecipe[]
+  comments      Comment[]
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  recipes  Recipe[]
+}
+
+model Ingredient {
+  id        String   @id @default(cuid())
+  name      String
+  recipeId  String
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+}
+
+model Instruction {
+  id        String   @id @default(cuid())
+  step      String
+  stepOrder Int
+  recipeId  String
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+}
+
+model Tag {
+  id       String       @id @default(cuid())
+  name     String       @unique
+  recipes  RecipeTag[]
+}
+
+model RecipeTag {
+  id        String  @id @default(cuid())
+  recipe    Recipe  @relation(fields: [recipeId], references: [id])
+  recipeId  String
+  tag       Tag     @relation(fields: [tagId], references: [id])
+  tagId     String
+
+  @@unique([recipeId, tagId])
+}
+
+model SavedRecipe {
+  id        String @id @default(cuid())
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String
+  recipe    Recipe @relation(fields: [recipeId], references: [id])
+  recipeId  String
+
+  @@unique([userId, recipeId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  recipeId  String
+}
+

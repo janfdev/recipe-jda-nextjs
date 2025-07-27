@@ -1,4 +1,6 @@
 import { AppSidebar } from "@/components/admin/app-sidebar";
+import Profile from "@/components/Profile";
+import ModeToggle from "@/components/theme/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
@@ -10,15 +12,20 @@ export default function LayoutAdmin({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
+      <main className="w-full">
         <div className="flex items-center justify-between p-4">
-          <SidebarTrigger />
-          <Separator
-            orientation="vertical"
-            className="mx-1 data-[orientation=vertical]:h-4"
-          />
-          <h1>Document</h1>
-          
+          <div className="flex items-center">
+            <SidebarTrigger />
+            <Separator
+              orientation="vertical"
+              className="mx-1 data-[orientation=vertical]:h-4"
+            />
+            <h1>Document</h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <ModeToggle />
+            <Profile />
+          </div>
         </div>
         {children}
       </main>
