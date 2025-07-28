@@ -20,7 +20,7 @@ export default function LayoutAdmin({
               orientation="vertical"
               className="mx-1 data-[orientation=vertical]:h-4"
             />
-            <h1>Document</h1>
+            <h1>Dashboard</h1>
           </div>
           <div className="flex items-center gap-2">
             <ModeToggle />

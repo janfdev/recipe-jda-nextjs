@@ -1,15 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CategoryTypes, LoadingState } from "@/lib/types/type";
-import { X, Pencil } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { RecipeTypes, LoadingState } from "@/lib/types/type";
+import axiosInstance from "@/lib/axios";
 import { toast } from "react-toastify";
-
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import CategorySectionPage from "@/components/section/category-section";
+import Link from "next/link";
+import Image from "next/image";
+import { ChevronRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState<CategoryTypes[]>([]);
-  const [newName, setNewName] = useState<string>("");
+  const [categories, setCategories] = useState<
+    { id: string; name: string; count: number }[]
+  >([]);
+  const [recipes, setRecipes] = useState<RecipeTypes[]>([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null
+  );
+
   const [isLoading, setIsLoading] = useState<LoadingState>({
     fetch: false,
     add: false,
@@ -18,157 +28,106 @@ export default function CategoriesPage() {
   });
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      setIsLoading((prev) => ({ ...prev, fetch: true }));
+    const fetchData = async () => {
       try {
-        const res = await fetch("/api/categories");
-        if (!res.ok) throw new Error("Failed to fetch");
-        const { data } = await res.json();
-        setCategories(data);
-      } catch (error) {
-        console.log(error);
-        toast.error("Error");
+        const [categoryRes, recipeRes] = await Promise.all([
+          axiosInstance.get("/api/categories/with-count"),
+          axiosInstance.get("/api/recipes")
+        ]);
+        setCategories(categoryRes.data.data); // format: [{ id, name, count }]
+        setRecipes(recipeRes.data.data);
+      } catch (err) {
+        console.error("Failed to load data", err);
       } finally {
         setIsLoading((prev) => ({ ...prev, fetch: false }));
       }
     };
 
-    fetchCategories();
+    fetchData();
   }, []);
 
-  const addCategory = async () => {
-    if (!newName.trim()) {
-      toast.success("Category added");
-      return;
-    }
-
-    setIsLoading((prev) => ({ ...prev, add: true }));
-    try {
-      const res = await fetch("/api/categories", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name: newName.trim() })
-      });
-
-      if (!res.ok) throw new Error("Failed to add category");
-
-      const { data } = await res.json();
-      setCategories((prev) => [...prev, data]);
-      setNewName("");
-      toast.success("Add category success");
-    } catch (error) {
-      console.log(error);
-      toast.error("API ERROR");
-    } finally {
-      setIsLoading((prev) => ({ ...prev, add: false }));
-    }
-  };
-
-  const editCategory = async (id: string, currentName: string) => {
-    const editName = prompt("Enter new name", currentName);
-    if (!editName?.trim()) return;
-
-    setIsLoading((prev) => ({ ...prev, edit: true }));
-    try {
-      const res = await fetch(`/api/categories/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name: editName.trim() })
-      });
-
-      if (!res.ok) throw new Error("Failed to update category");
-
-      const { data } = await res.json();
-      setCategories((prev) =>
-        prev.map((item) => (item.id === id ? data : item))
-      );
-      toast.success("Category updated successfully");
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to update category");
-    } finally {
-      setIsLoading((prev) => ({ ...prev, edit: false }));
-    }
-  };
-
-  const deleteCategory = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this category?")) return;
-
-    setIsLoading((prev) => ({ ...prev, delete: true }));
-    try {
-      const res = await fetch(`/api/categories/${id}`, {
-        method: "DELETE"
-      });
-
-      if (!res.ok) throw new Error("Failed to delete category");
-
-      setCategories((prev) => prev.filter((item) => item.id !== id));
-      toast.success("Category deleted successfully");
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to delete category");
-    } finally {
-      setIsLoading((prev) => ({ ...prev, delete: false }));
-    }
-  };
+  const filteredRecipes = selectedCategoryId
+    ? recipes.filter((r) => r.categoryId === selectedCategoryId)
+    : recipes;
 
   return (
-    <main className="container mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-6">Category Management</h1>
+    <main className="py-4 px-4 min-h-screen flex flex-col  mx-auto bg-background">
+      <Header />
+      <CategorySectionPage />
 
-      <div className="flex gap-2 mb-6">
-        <Input
-          type="text"
-          placeholder="Enter category name"
-          value={newName}
-          onChange={(e) => setNewName(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && addCategory()}
-          disabled={isLoading.add}
-        />
-        <Button
-          onClick={addCategory}
-          disabled={!newName.trim() || isLoading.add}
-        >
-          {isLoading.add ? "Adding..." : "Add Category"}
-        </Button>
-      </div>
+      <section className="container mx-auto py-20 px-4 max-w-7xl">
+        <h1 className="text-2xl font-bold mb-6">Category List</h1>
 
-      {isLoading.fetch ? (
-        <div>Loading categories...</div>
-      ) : (
-        <ul className="space-y-2">
-          {categories?.map((item) => (
-            <li
-              key={item.id}
-              className="flex items-center justify-between p-3 border rounded-lg"
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <div className="flex flex-wrap gap-3 mb-10">
+            <Badge
+              onClick={() => setSelectedCategoryId(null)}
+              className={`cursor-pointer ${
+                selectedCategoryId === null ? "bg-primary text-white" : ""
+              }`}
             >
-              <span className="font-medium">{item.name}</span>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => editCategory(item.id, item.name)}
-                  disabled={isLoading.edit}
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  onClick={() => deleteCategory(item.id)}
-                  disabled={isLoading.delete}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+              All
+            </Badge>
+            {categories.map((cat) => (
+              <Badge
+                key={cat.id}
+                onClick={() => setSelectedCategoryId(cat.id)}
+                className={`cursor-pointer ${
+                  selectedCategoryId === cat.id ? "bg-primary text-white" : ""
+                }`}
+              >
+                {cat.name} ({cat.count})
+              </Badge>
+            ))}
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {filteredRecipes.map((recipe) => (
+            <Link
+              key={recipe.id}
+              href={`/recipes/details/${recipe.id}`}
+              className="group flex cursor-pointer flex-col bg-card p-6 rounded-xl shadow-sm transition-all hover:shadow-md hover:translate-y-[-4px] hover:bg-accent hover:text-accent-foreground border border-transparent hover:border-accent-foreground/10"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs text-muted-foreground">
+                  {recipe.category?.name}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {recipe.date}
+                </span>
               </div>
-            </li>
+              <div className="flex flex-col gap-2 mb-4">
+                <Image
+                  src={recipe.image}
+                  alt="image"
+                  width={500}
+                  height={300}
+                  className="w-full h-40 object-cover rounded-lg"
+                />
+                <h3 className="font-semibold text-lg mb-2 group-hover:text-accent-foreground transition-colors">
+                  {recipe.title}
+                </h3>
+                <p className="text-sm text-muted-foreground group-hover:text-accent-foreground/80 transition-colors">
+                  {recipe.description}
+                </p>
+              </div>
+              <div className="mt-auto pt-4 flex items-center text-xs font-medium">
+                <span className="text-primary group-hover:text-accent-foreground transition-colors flex gap-2 items-center">
+                  <p>Baca Resep</p>
+                  <ChevronRight
+                    className="group-hover:translate-x-1 transition-all"
+                    size={13}
+                  />
+                </span>
+              </div>
+            </Link>
           ))}
-        </ul>
-      )}
+        </div>
+      </section>
+      <Footer />
     </main>
   );
 }

@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Hamburger } from "lucide-react";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
-import axios from "axios";
+import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
@@ -40,7 +40,7 @@ const Page = () => {
     setIsLoading(true);
     console.log("Register user: ", { email: registerEmail });
 
-    const res = await axios.post("/api/auth/signup", {
+    const res = await axiosInstance.post("/api/auth/signup", {
       name: registerName,
       email: registerEmail,
       password: registerPassword

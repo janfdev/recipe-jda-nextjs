@@ -15,11 +15,14 @@ type Instructions = {
   step: string;
 };
 
-export interface RecipeBlogTypes {
+export interface RecipeTypes {
   id: number;
   title: string;
   date: string;
-  category?: string;
+  categoryId?: string,
+  category?: {
+    name?: string;
+  };
   description: string;
   detailsRecipe?: string;
   tags?: string[];

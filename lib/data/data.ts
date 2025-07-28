@@ -1,13 +1,14 @@
 import HeroImage from "@/public/hero-image.jpg";
-import { CategoryTypes, RecipeBlogTypes } from "../types/type";
+import { CategoryTypes, RecipeTypes } from "../types/type";
 import { Album, Home, Panda } from "lucide-react";
 
-export const RecipeBlog: RecipeBlogTypes[] = [
+export const RecipeBlog: RecipeTypes[] = [
   {
     id: 1,
     title: "Ujang Mewing",
     date: "10 Juli 2025",
-    category: "Dessert",
+    category: { name: "Dessert" },
+    categoryId: "xy21928121",
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     image: HeroImage,
     ingredients: [
@@ -30,7 +31,8 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     id: 2,
     title: "Ujang Cihuy",
     date: "10 Juli 2025",
-    category: "Dessert",
+    category: { name: "Dessert" },
+    categoryId: "xy2ewewewew",
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     detailsRecipe:
       "Lorem dolor sit amet, consectetur adipisicing elit. Qui maxime ipsam corporis.",
@@ -49,7 +51,8 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     id: 3,
     title: "Ujang Kedu",
     date: "10 Juli 2025",
-    category: "Dinner",
+    category: { name: "Dinner" },
+    categoryId: "xy219291j31",
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     detailsRecipe:
       "Lorem dolor sit amet, consectetur adipisicing elit. Detail lengkap di sini.",
@@ -68,7 +71,8 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     id: 4,
     title: "Ujang Goreng",
     date: "10 Juli 2025",
-    category: "Dinner",
+    category: { name: "Dinner" },
+    categoryId: "xy2172y81y21",
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     image: HeroImage,
     ingredients: [
@@ -84,7 +88,8 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     id: 5,
     title: "Ujang Sayur",
     date: "10 Juli 2025",
-    category: "Dinner",
+    category: { name: "Dinner" },
+    categoryId: "xy2",
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     image: HeroImage,
     ingredients: [
@@ -100,7 +105,7 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     id: 6,
     title: "Ujang Sup",
     date: "10 Juli 2025",
-    category: "Dinner",
+    category: { name: "Dinner" },
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     image: HeroImage,
     ingredients: [
@@ -116,7 +121,7 @@ export const RecipeBlog: RecipeBlogTypes[] = [
     id: 7,
     title: "Ujang Bakar",
     date: "10 Juli 2025",
-    category: "Dinner",
+    category: { name: "Dinner" },
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     image: HeroImage,
     ingredients: [
@@ -156,5 +161,20 @@ export const navItemsDashboard = [
     title: "Categories",
     url: "/admin/dashboard/categories",
     icon: Panda
+  }
+];
+
+export const navItemsFooter = [
+  {
+    name: "Home",
+    href: "/"
+  },
+  {
+    name: "Browse Recipe",
+    href: "/recipes"
+  },
+  {
+    name: "Categories",
+    href: "/recipes/categories"
   }
 ];

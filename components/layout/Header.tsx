@@ -6,8 +6,8 @@ import { Menu, X, ArrowRight, Hamburger } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import ModeToggle from "../theme/mode-toggle";
-import { useSession, signOut } from "next-auth/react";
-import { Button } from "../ui/button";
+import { useSession } from "next-auth/react";
+import Profile from "../Profile";
 interface NavItem {
   name: string;
   href: string;
@@ -16,8 +16,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: "Home", href: "/" },
   { name: "Browse", href: "/recipes" },
-  { name: "Categories", href: "/recipes/categories" },
-  { name: "FAQ", href: "#faq" }
+  { name: "Categories", href: "/recipes/categories" }
 ];
 
 export default function Header() {
@@ -88,7 +87,7 @@ export default function Header() {
               <div key={item.name} className="relative">
                 <Link
                   href={item.href}
-                  className="text-foreground flex items-center space-x-1 font-medium transition-colors duration-200 hover:text-rose-500"
+                  className="text-foreground flex items-center space-x-1 font-medium transition-colors duration-200 hover:text-amber-500"
                 >
                   <span>{item.name}</span>
                 </Link>
@@ -99,16 +98,8 @@ export default function Header() {
           <div className="hidden items-center space-x-4 lg:flex">
             <ModeToggle />
             <span className="flex items-center gap-3">
-              {session?.user?.name ? (
-                <>
-                  <p>Hi, {session.user.name}</p>
-                  <Button
-                    variant={"destructive"}
-                    onClick={() => signOut({ callbackUrl: "/login" })}
-                  >
-                    Logout
-                  </Button>
-                </>
+              {session?.user ? (
+                <Profile />
               ) : (
                 <>
                   <Link
@@ -142,7 +133,10 @@ export default function Header() {
             {isMobileMenuOpen ? (
               <X className="h-6 w-6" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <div className="flex items-center gap-x-2">
+                <ModeToggle />
+                <Menu className="h-6 w-6" />
+              </div>
             )}
           </motion.button>
         </div>
@@ -169,21 +163,27 @@ export default function Header() {
                   </Link>
                 ))}
                 <div className="space-y-2 px-4 py-2">
-                  <ModeToggle />
-                  <Link
-                    href="/login"
-                    className="hover:bg-muted block w-full text-amber-500 border border-white rounded-lg py-2.5 text-center font-medium transition-colors duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/register"
-                    className="block w-full rounded-lg bg-gradient-to-r from-amber-500 to-amber-700 py-2.5 text-center font-medium text-white transition-all duration-200 hover:shadow-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Get Started
-                  </Link>
+                  {session?.user ? (
+                    <Profile />
+                  ) : (
+                    <>
+                      <ModeToggle />
+                      <Link
+                        href="/login"
+                        className="hover:bg-muted block w-full text-amber-500 border border-white rounded-lg py-2.5 text-center font-medium transition-colors duration-200"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        href="/register"
+                        className="block w-full rounded-lg bg-gradient-to-r from-amber-500 to-amber-700 py-2.5 text-center font-medium text-white transition-all duration-200 hover:shadow-lg"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Get Started
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>

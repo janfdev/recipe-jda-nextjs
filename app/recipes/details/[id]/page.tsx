@@ -2,11 +2,12 @@ import React, { use } from "react";
 import { RecipeBlog } from "@/lib/data/data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { Heart, Share2, PrinterIcon as Print } from "lucide-react";
+import { Heart, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 export default function RecipesDetail({
   params
@@ -23,7 +24,7 @@ export default function RecipesDetail({
       <div>
         <Header />
       </div>
-      <main className="container mx-auto px-4 py-8">
+      <section className="container mx-auto px-4 py-20">
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
           <div className="space-y-6">
             <div>
@@ -52,10 +53,6 @@ export default function RecipesDetail({
                 <Button variant="outline">
                   <Share2 className="h-4 w-4 mr-2" />
                   Share
-                </Button>
-                <Button variant="outline">
-                  <Print className="h-4 w-4 mr-2" />
-                  Print
                 </Button>
               </div>
             </div>
@@ -115,7 +112,10 @@ export default function RecipesDetail({
             </Card>
           </div>
         </div>
-      </main>
+      </section>
+      <div>
+        <Footer />
+      </div>
     </main>
   );
 }

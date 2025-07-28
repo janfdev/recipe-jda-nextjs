@@ -30,12 +30,17 @@ model Recipe {
   id            String         @id @default(cuid())
   title         String
   description   String
-  image         String         // URL dari Cloudinary
+  image         String         
   date          DateTime       @default(now())
   categoryId    String
   category      Category       @relation(fields: [categoryId], references: [id])
   ingredients   Ingredient[]
   instructions  Instruction[]
+  rating        Float?         
+  prepTime      Int?          
+  cookTime      Int?           
+  servings      Int?           
+  difficulty    String?        
   tags          RecipeTag[]
   savedBy       SavedRecipe[]
   comments      Comment[]

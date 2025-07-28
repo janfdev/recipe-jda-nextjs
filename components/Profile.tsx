@@ -8,11 +8,20 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuCheckboxItem
+  DropdownMenuItem
 } from "./ui/dropdown-menu";
 import axios from "axios";
-import { Mail, UserCircle, LogOutIcon } from "lucide-react";
+import {
+  User,
+  BookmarkIcon,
+  MessageSquare,
+  Settings,
+  LogOut
+} from "lucide-react";
 import { signOut } from "next-auth/react";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import { Badge } from "./ui/badge";
 const Profile = () => {
   const [userInfo, setUserInfo] = useState<{
     name: string;
@@ -45,32 +54,55 @@ const Profile = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar>
-          <AvatarFallback className="uppercase">
-            {handleInitials(userInfo.name)}
-          </AvatarFallback>
-        </Avatar>
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar className="h-8 w-8">
+            <AvatarFallback>{handleInitials(userInfo.name)}</AvatarFallback>
+          </Avatar>
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="px-4">
-        <DropdownMenuLabel>User Info</DropdownMenuLabel>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{userInfo.name}</p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {userInfo.email}
+            </p>
+          </div>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuCheckboxItem>
-          <UserCircle />
-          <h3 className="capitalize text-[15px] font-bold">{userInfo.name}</h3>
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem>
-          <Mail />
-          <p className=" text-[15px] font-bold">{userInfo.email}</p>
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem>
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })}
-            className="bg-red-500 cursor-pointer flex items-center justify-between gap-3 text-white py-1.5 px-2 w-full rounded-md"
-          >
-            <LogOutIcon />
-            <p>Logout</p>
-          </button>
-        </DropdownMenuCheckboxItem>
+        <DropdownMenuItem asChild>
+          <Link href="/profile" className="flex items-center">
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/saved-recipes" className="flex items-center">
+            <BookmarkIcon className="mr-2 h-4 w-4" />
+            <span>Saved Recipes</span>
+            <Badge variant="secondary" className="ml-auto">
+              12
+            </Badge>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/my-comments" className="flex items-center">
+            <MessageSquare className="mr-2 h-4 w-4" />
+            <span>My Comments</span>
+            <Badge variant="secondary" className="ml-auto">
+              8
+            </Badge>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Settings className="mr-2 h-4 w-4" />
+          <span>Settings</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>Log out</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

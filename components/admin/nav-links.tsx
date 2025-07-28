@@ -12,17 +12,17 @@ const NavLinks = () => {
     <SidebarGroup className="!mt-4">
       <SidebarGroupContent className="flex flex-col gap-2">
         {navItemsDashboard.map((menu, index) => (
-          <SidebarMenu key={index} className="flex items-center gap-2">
-            <SidebarMenuButton>
-              <Link
-                href={menu.url}
-                className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+          <Link key={index} href={menu.url}>
+            <SidebarMenu className="flex items-center gap-2">
+              <SidebarMenuButton
+                className="flex items-center gap-2 text-sm font-medium
+               "
               >
                 <menu.icon className="size-4" />
                 {menu.title}
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenu>
+              </SidebarMenuButton>
+            </SidebarMenu>
+          </Link>
         ))}
       </SidebarGroupContent>
     </SidebarGroup>
