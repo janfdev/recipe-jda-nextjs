@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Avatar, AvatarFallback } from "./ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,20 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem
-} from "./ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import axios from "axios";
-import {
-  User,
-  BookmarkIcon,
-  MessageSquare,
-  Settings,
-  LogOut
-} from "lucide-react";
+import { User, LogOut, LayoutDashboard } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
-const Profile = () => {
+export const AvatarAdmin = () => {
   const [userInfo, setUserInfo] = useState<{
     name: string;
     email: string;
@@ -71,32 +64,16 @@ const Profile = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/profile" className="flex items-center">
+          <Link href="/admin/profile" className="flex items-center">
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/saved-recipes" className="flex items-center">
-            <BookmarkIcon className="mr-2 h-4 w-4" />
-            <span>Saved Recipes</span>
-            <Badge variant="secondary" className="ml-auto">
-              12
-            </Badge>
+          <Link href="/admin/dashboard" className="flex items-center">
+            <LayoutDashboard className="mr-2 h-4 w-4" />
+            <span>Dashboard</span>
           </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/my-comments" className="flex items-center">
-            <MessageSquare className="mr-2 h-4 w-4" />
-            <span>My Comments</span>
-            <Badge variant="secondary" className="ml-auto">
-              8
-            </Badge>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Settings className="mr-2 h-4 w-4" />
-          <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
@@ -107,5 +84,3 @@ const Profile = () => {
     </DropdownMenu>
   );
 };
-
-export default Profile;

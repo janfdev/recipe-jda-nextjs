@@ -20,7 +20,6 @@ export async function GET() {
     console.log(error);
     return NextResponse.json(
       {
-        success: false,
         error: "Failed to fetch"
       },
       {

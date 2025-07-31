@@ -8,10 +8,7 @@ export async function GET(
   const { id } = await params;
 
   if (!id || typeof id !== "string") {
-    return NextResponse.json(
-      { success: false, error: "Invalid ID format" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
   }
 
   try {
@@ -19,7 +16,7 @@ export async function GET(
 
     if (!category) {
       return NextResponse.json(
-        { success: false, error: "Category not found" },
+        { error: "Category not found" },
         { status: 404 }
       );
     }
@@ -28,7 +25,7 @@ export async function GET(
   } catch (error) {
     console.error("GET /categories/[id] error:", error);
     return NextResponse.json(
-      { success: false, error: "Internal Server Error" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
@@ -41,10 +38,7 @@ export async function PATCH(
   const { id } = await params;
 
   if (!id || typeof id !== "string") {
-    return NextResponse.json(
-      { success: false, error: "Invalid ID format" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
   }
 
   const body = await request.json();
@@ -66,10 +60,7 @@ export async function PATCH(
     return NextResponse.json({ success: true, data: updated });
   } catch (err) {
     console.error("PATCH /categories/[id] error:", err);
-    return NextResponse.json(
-      { success: false, error: "Update failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Update failed" }, { status: 500 });
   }
 }
 
@@ -80,10 +71,7 @@ export async function DELETE(
   const { id } = await params;
 
   if (!id || typeof id !== "string") {
-    return NextResponse.json(
-      { success: false, error: "Invalid ID format" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
   }
 
   try {
@@ -91,9 +79,6 @@ export async function DELETE(
     return NextResponse.json({ success: true, data: deleted });
   } catch (err) {
     console.error("DELETE /categories/[id] error:", err);
-    return NextResponse.json(
-      { success: false, error: "Delete failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Delete failed" }, { status: 500 });
   }
 }

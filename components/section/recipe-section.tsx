@@ -37,7 +37,7 @@ const RecipeSection = () => {
             >
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs text-muted-foreground">
-                  {recipe.category}
+                  {recipe.category?.name}
                 </span>
                 <span className="text-xs text-muted-foreground">
                   {recipe.date}

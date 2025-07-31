@@ -1,6 +1,6 @@
 import { AppSidebar } from "@/components/admin/app-sidebar";
-import Profile from "@/components/Profile";
-import ModeToggle from "@/components/theme/mode-toggle";
+import { AvatarAdmin } from "@/components/admin/avatar-admin";
+import ModeToggle from "@/components/ui/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
@@ -24,7 +24,7 @@ export default function LayoutAdmin({
           </div>
           <div className="flex items-center gap-2">
             <ModeToggle />
-            <Profile />
+            <AvatarAdmin />
           </div>
         </div>
         {children}

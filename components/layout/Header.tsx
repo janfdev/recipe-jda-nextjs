@@ -5,9 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight, Hamburger } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import ModeToggle from "../theme/mode-toggle";
+import ModeToggle from "../ui/mode-toggle";
 import { useSession } from "next-auth/react";
-import Profile from "../Profile";
+import Profile from "../avatar-user";
+import { AvatarAdmin } from "../admin/avatar-admin";
+import AvatarUser from "../avatar-user";
 interface NavItem {
   name: string;
   href: string;
@@ -99,7 +101,11 @@ export default function Header() {
             <ModeToggle />
             <span className="flex items-center gap-3">
               {session?.user ? (
-                <Profile />
+                session.user.role === "ADMIN" ? (
+                  <AvatarAdmin />
+                ) : (
+                  <AvatarUser />
+                )
               ) : (
                 <>
                   <Link
@@ -134,7 +140,6 @@ export default function Header() {
               <X className="h-6 w-6" />
             ) : (
               <div className="flex items-center gap-x-2">
-                <ModeToggle />
                 <Menu className="h-6 w-6" />
               </div>
             )}
