@@ -20,7 +20,7 @@ export async function uploadToCloudinary(
   options: {
     folder?: string;
     public_id?: string;
-    transformation?: any;
+    transformation?: Record<string, unknown>;
     resource_type?: "image";
   } = {}
 ): Promise<CloudinaryUploadResult> {
@@ -59,7 +59,7 @@ export async function deleteFromCloudinary(publicId: string): Promise<void> {
 
 export function getCloudinaryUrl(
   publicId: string,
-  transformation?: any
+  transformation?: Record<string, unknown>
 ): string {
   return cloudinary.url(publicId, {
     ...transformation,

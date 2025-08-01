@@ -31,7 +31,7 @@ const Page = () => {
         router.push("/");
       }
     }
-  }, [session]);
+  });
 
   const handleLogin = async () => {
     setIsLoading(true);

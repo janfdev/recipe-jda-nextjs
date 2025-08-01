@@ -1,17 +1,31 @@
-import React from "react";
-import { navItemsDashboard } from "@/lib/data/data";
-import Link from "next/link";
-import { SidebarGroup, SidebarGroupContent, SidebarMenu } from "../ui/sidebar";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
+"use client";
 
-const NavLinks = () => {
+import { usePathname } from "next/navigation";
+import React from "react";
+import { SidebarGroup, SidebarGroupContent, SidebarMenu } from "./ui/sidebar";
+import { MessageSquare, User } from "lucide-react";
+import clsx from "clsx";
+import Link from "next/link";
+
+const navItems = [
+  {
+    name: "Profile",
+    url: "/user/my-profile",
+    icon: User
+  },
+  {
+    name: "Komentar Saya",
+    url: "/user/my-comment",
+    icon: MessageSquare
+  }
+];
+const NavLinksUser = () => {
   const pathname = usePathname();
 
   return (
     <SidebarGroup className="!mt-4">
       <SidebarGroupContent className="flex flex-col gap-2">
-        {navItemsDashboard.map((menu, index) => (
+        {navItems.map((menu, index) => (
           <Link key={index} href={menu.url}>
             <SidebarMenu
               className={clsx(
@@ -33,4 +47,4 @@ const NavLinks = () => {
   );
 };
 
-export default NavLinks;
+export default NavLinksUser;

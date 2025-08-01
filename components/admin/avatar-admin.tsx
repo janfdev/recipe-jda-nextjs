@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +15,12 @@ import { User, LogOut, LayoutDashboard } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
 export const AvatarAdmin = () => {
   const [userInfo, setUserInfo] = useState<{
     name: string;
     email: string;
+    image: string;
   } | null>(null);
 
   const handleInitials = (name: string) => {
@@ -33,7 +35,7 @@ export const AvatarAdmin = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get("/api/user/me");
-        setUserInfo(res.data);
+        setUserInfo(res.data.data);
       } catch (error) {
         console.error("Failed to fetch user:", error);
       }
@@ -49,7 +51,11 @@ export const AvatarAdmin = () => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarFallback>{handleInitials(userInfo.name)}</AvatarFallback>
+            {userInfo?.image ? (
+              <AvatarImage src={userInfo.image} alt={userInfo.name}/>
+            ) : (
+              <AvatarFallback>{handleInitials(userInfo.name)}</AvatarFallback>
+            )}
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -64,7 +70,7 @@ export const AvatarAdmin = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/admin/profile" className="flex items-center">
+          <Link href="/admin/dashboard/profile" className="flex items-center">
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </Link>

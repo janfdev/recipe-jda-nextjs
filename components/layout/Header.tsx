@@ -7,9 +7,8 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import ModeToggle from "../ui/mode-toggle";
 import { useSession } from "next-auth/react";
-import Profile from "../avatar-user";
 import { AvatarAdmin } from "../admin/avatar-admin";
-import AvatarUser from "../avatar-user";
+import { AvatarUser } from "../AvatarUser";
 interface NavItem {
   name: string;
   href: string;
@@ -169,7 +168,7 @@ export default function Header() {
                 ))}
                 <div className="space-y-2 px-4 py-2">
                   {session?.user ? (
-                    <Profile />
+                    <AvatarUser />
                   ) : (
                     <>
                       <ModeToggle />

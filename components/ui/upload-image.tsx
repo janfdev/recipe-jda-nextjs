@@ -163,7 +163,7 @@ export function ImageUpload({
             <div key={index} className="relative group">
               <div className="aspect-square overflow-hidden rounded-lg border">
                 <img
-                  src={url}
+                  src={url}     
                   alt={`Upload ${index + 1}`}
                   className="w-full h-full object-cover"
                 />

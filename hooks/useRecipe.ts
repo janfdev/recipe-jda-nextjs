@@ -13,7 +13,7 @@ export const useRecipe = (id: string) => {
         const res = await axiosInstance.get(`/api/recipes/${id}`);
         setRecipe(res.data.data);
       } catch (error) {
-        console.error("Gagal mengambil data resep", error);
+        console.error("Failed get data recipe: ", error);
       } finally {
         setLoading(false);
       }

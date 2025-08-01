@@ -4,17 +4,26 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { LoadingState, RecipeTypes } from "@/lib/types/type";
+import { LoadingState, RecipeDetailType } from "@/lib/types/type";
 import axiosInstance from "@/lib/axios";
 
 const RecipeSection = () => {
-  const [recipes, setRecipes] = useState<RecipeTypes[]>([]);
+  const [recipes, setRecipes] = useState<RecipeDetailType[]>([]);
   const [isLoading, setIsLoading] = useState<LoadingState>({
     fetch: false,
     add: false,
     edit: false,
     delete: false
   });
+
+  const formatDateWithTime = (date: string) => {
+    return new Date(date).toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +75,7 @@ const RecipeSection = () => {
                   {recipe.category?.name}
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  {recipe.date}
+                  {formatDateWithTime(recipe.date)}
                 </span>
               </div>
               <div className="flex flex-col gap-2 mb-4">

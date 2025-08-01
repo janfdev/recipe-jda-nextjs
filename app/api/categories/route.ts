@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
-import { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const includeCount = req.nextUrl.searchParams.get("include") === "count";
@@ -20,7 +19,7 @@ export async function GET(req: NextRequest) {
     const data = categories.map((cat) => ({
       id: cat.id,
       name: cat.name,
-      count: includeCount ? cat._count.recipes : undefined
+      count: includeCount ? cat._count?.recipes ?? 0 : undefined
     }));
 
     return NextResponse.json({ success: true, data }, { status: 200 });
@@ -45,9 +44,7 @@ export async function POST(request: NextRequest) {
         success: true,
         data: newCategory
       },
-      {
-        status: 201
-      }
+      { status: 201 }
     );
   } catch (error) {
     console.log(error);
@@ -56,9 +53,7 @@ export async function POST(request: NextRequest) {
         success: false,
         error: "POST data failed"
       },
-      {
-        status: 500
-      }
+      { status: 500 }
     );
   }
 }

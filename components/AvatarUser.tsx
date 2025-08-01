@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,23 +9,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem
-} from "./ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import axios from "axios";
-import {
-  User,
-  BookmarkIcon,
-  MessageSquare,
-  Settings,
-  LogOut
-} from "lucide-react";
+import { User, LogOut, MessageSquare } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
-const AvatarUser = () => {
+
+export const AvatarUser = () => {
   const [userInfo, setUserInfo] = useState<{
     name: string;
     email: string;
+    image: string;
   } | null>(null);
 
   const handleInitials = (name: string) => {
@@ -40,7 +35,7 @@ const AvatarUser = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get("/api/user/me");
-        setUserInfo(res.data);
+        setUserInfo(res.data.data);
       } catch (error) {
         console.error("Failed to fetch user:", error);
       }
@@ -56,7 +51,11 @@ const AvatarUser = () => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarFallback>{handleInitials(userInfo.name)}</AvatarFallback>
+            {userInfo?.image ? (
+              <AvatarImage src={userInfo.image} alt={userInfo.name} />
+            ) : (
+              <AvatarFallback>{handleInitials(userInfo.name)}</AvatarFallback>
+            )}
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -71,41 +70,23 @@ const AvatarUser = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/profile" className="flex items-center">
+          <Link href="/user/my-profile" className="flex items-center">
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/saved-recipes" className="flex items-center">
-            <BookmarkIcon className="mr-2 h-4 w-4" />
-            <span>Saved Recipes</span>
-            <Badge variant="secondary" className="ml-auto">
-              12
-            </Badge>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/my-comments" className="flex items-center">
+          <Link href="/user/my-comment" className="flex items-center">
             <MessageSquare className="mr-2 h-4 w-4" />
-            <span>My Comments</span>
-            <Badge variant="secondary" className="ml-auto">
-              8
-            </Badge>
+            <span>Komentar Saya</span>
           </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Settings className="mr-2 h-4 w-4" />
-          <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+        <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <button onClick={() => signOut({ callbackUrl: "/" })}>Log out</button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
-
-export default AvatarUser;

@@ -26,6 +26,14 @@ export default function CategoriesPage() {
     delete: false
   });
 
+  const formatDateWithTime = (date: string) => {
+    return new Date(date).toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading((prev) => ({ ...prev, fetch: true })); // Tambahkan ini
@@ -99,7 +107,7 @@ export default function CategoriesPage() {
                   {recipe.category?.name}
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  {recipe.date}
+                  {formatDateWithTime(recipe.date)}
                 </span>
               </div>
               <div className="flex flex-col gap-2 mb-4">

@@ -3,39 +3,50 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-export async function GET() {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   try {
     const comments = await prisma.comment.findMany({
+      where: { recipeId: id },
       include: {
-        user: { select: { name: true, image: true } },
-        recipe: { select: { title: true } }
+        user: { select: { name: true, image: true } }
       },
       orderBy: { createdAt: "desc" }
     });
 
     return NextResponse.json({ success: true, data: comments });
   } catch (error) {
-    console.error("GET comment error", error);
+    console.error("GET comments error:", error);
     return NextResponse.json(
-      { error: "Failed to fetch comments" },
+      { success: false, error: "Failed to fetch comments" },
       { status: 500 }
     );
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   try {
     const session = await getServerSession(authOptions);
-
     if (!session || !session.user || !session.user.email) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
     }
 
-    const body = await request.json();
-    const { recipeId, content } = body;
-
-    if (!recipeId || !content) {
-      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    const { content } = await req.json();
+    if (!content || !content.trim()) {
+      return NextResponse.json(
+        { success: false, error: "Content is required" },
+        { status: 400 }
+      );
     }
 
     const user = await prisma.user.findUnique({
@@ -49,17 +60,17 @@ export async function POST(request: NextRequest) {
     const comment = await prisma.comment.create({
       data: {
         content,
-        recipeId,
+        recipeId: id,
         userId: user.id
       }
     });
 
     return NextResponse.json({ success: true, data: comment }, { status: 201 });
   } catch (error) {
-    console.error("Upload komen error", error);
+    console.error("POST comment error:", error);
     return NextResponse.json(
-      { error: "Failed to post comment" },
-      { status: 400 }
+      { success: false, error: "Failed to create comment" },
+      { status: 500 }
     );
   }
 }
