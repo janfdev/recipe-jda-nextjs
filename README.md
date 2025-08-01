@@ -1,3 +1,5 @@
+# **ReciVerse**
+
 ReciVerse is a full-stack recipe sharing application built with the Next.js App Router, Prisma, and Tailwind CSS. It features a complete user authentication system, a dedicated admin dashboard for content management, and a beautiful, responsive interface for users to browse and interact with recipes.
 
 ## ✨ Features
