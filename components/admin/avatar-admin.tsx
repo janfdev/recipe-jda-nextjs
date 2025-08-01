@@ -76,9 +76,9 @@ export const AvatarAdmin = () => {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+        <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <button onClick={() => signOut({ callbackUrl: "/" })}>Log out</button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

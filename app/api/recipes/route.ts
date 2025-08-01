@@ -14,7 +14,7 @@ export async function GET() {
           include: { tag: true }
         }
       },
-      orderBy: { date: "desc" }
+      orderBy: { date: "asc" }
     });
 
     const data = recipes.map((r) => ({
@@ -23,6 +23,7 @@ export async function GET() {
       description: r.description,
       image: r.image,
       date: r.date.toISOString(),
+      categoryId: r.categoryId,
       category: r.category
         ? { id: r.category.id, name: r.category.name }
         : { id: "unknown", name: "Unknown" },
@@ -56,6 +57,7 @@ export async function POST(req: Request) {
       categoryId,
       prepTime,
       cookTime,
+      rating,
       servings,
       difficulty,
       ingredients,
@@ -71,6 +73,7 @@ export async function POST(req: Request) {
         categoryId,
         prepTime,
         cookTime,
+        rating,
         servings,
         difficulty,
         ingredients: {

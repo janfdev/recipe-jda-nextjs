@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { toast } from "react-toastify";
-import { RecipeTypes } from "@/lib/types/type";
+import { RecipeDetailType } from "@/lib/types/type";
 import Image from "next/image";
 import {
   Table,
@@ -26,23 +26,8 @@ import { Ellipsis, Pencil, Plus, Trash } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminRecipesPage() {
-  const [recipes, setRecipes] = useState<RecipeTypes[]>([]);
+  const [recipes, setRecipes] = useState<RecipeDetailType[]>([]);
   const [, setCategories] = useState<{ id: string; name: string }[]>([]);
-
-  // const [formData, setFormData] = useState({
-  //   title: "",
-  //   image: "",
-  //   description: "",
-  //   categoryId: "",
-  //   prepTime: 0,
-  //   cookTime: 0,
-  //   servings: 0,
-  //   difficulty: "",
-  //   rating: 0,
-  //   ingredients: "",
-  //   instructions: "",
-  //   tags: ""
-  // });
 
   const fetchData = async () => {
     const [recipesRes, categoryRes] = await Promise.all([
@@ -83,13 +68,13 @@ export default function AdminRecipesPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Recipes</BreadcrumbPage>
+            <BreadcrumbPage className="font-semibold">Recipes</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       <div className="flex justify-end">
         <Link href="recipes/new">
-          <Button>
+          <Button className="cursor-pointer">
             <Plus />
             <span className="md:block hidden">Create New Recipe</span>
           </Button>

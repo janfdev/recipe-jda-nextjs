@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/ui/upload-image";
 import axiosInstance from "@/lib/axios";
-import { RecipeTypes } from "@/lib/types/type";
+import { RecipeDetailType } from "@/lib/types/type";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 const Page = () => {
-  const [, setRecipes] = useState<RecipeTypes[]>([]);
+  const [, setRecipes] = useState<RecipeDetailType[]>([]);
   const [categories, setCategories] = useState<{ id: string; name: string }[]>(
     []
   );
@@ -56,8 +56,11 @@ const Page = () => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "number" ? Number(value) : value
+    }));
   };
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -76,6 +79,7 @@ const Page = () => {
       const res = await axiosInstance.post("/api/recipes", payload);
       if (res.data.success) {
         toast.success("Recipe added!");
+        fetchData();
         setFormData({
           title: "",
           image: "",
@@ -90,7 +94,6 @@ const Page = () => {
           instructions: "",
           tags: ""
         });
-        fetchData();
       }
     } catch (error) {
       console.error("Failed add recipe", error);
@@ -189,17 +192,22 @@ const Page = () => {
           onChange={handleChange}
           placeholder="Servings"
         />
-        <Input
+        <select
           name="difficulty"
           value={formData.difficulty}
           onChange={handleChange}
-          placeholder="Difficulty (Easy/Medium/Hard)"
-        />
+          className="border p-2 rounded"
+        >
+          <option value="">Pilih tingkat kesulitan</option>
+          <option value="Mudah">Mudah</option>
+          <option value="Sedang">Sedang</option>
+          <option value="Susah">Susah</option>
+        </select>
+
         <Input
           type="number"
           step="0.1"
           name="rating"
-          value={formData.rating}
           onChange={handleChange}
           placeholder="Rating (0–5)"
         />
@@ -207,21 +215,21 @@ const Page = () => {
           name="ingredients"
           value={formData.ingredients}
           onChange={handleChange}
-          placeholder="Ingredients (comma separated)"
+          placeholder="Bahan-bahan (Pisahkan dengan koma)"
           className="col-span-2"
         />
         <Input
           name="instructions"
           value={formData.instructions}
           onChange={handleChange}
-          placeholder="Instructions (comma separated)"
+          placeholder="Langkah-langkah (Pisahkan dengan koma)"
           className="col-span-2"
         />
         <Input
           name="tags"
           value={formData.tags}
           onChange={handleChange}
-          placeholder="Tags (comma separated)"
+          placeholder="Tags (Pisahkan dengan koma)"
           className="col-span-2"
         />
         <Button type="submit" className="col-span-2">

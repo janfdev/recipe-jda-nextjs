@@ -3,34 +3,15 @@
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
 
 export default function ModeToggle() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      setDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      setDarkMode(false);
-      document.documentElement.classList.remove("dark");
-    }
     setMounted(true);
   }, []);
-
-  const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    if (newMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  };
 
   if (!mounted) {
     return (
@@ -49,9 +30,9 @@ export default function ModeToggle() {
       variant="ghost"
       className="rounded-full w-10 cursor-pointer"
       aria-label="Toggle Theme"
-      onClick={toggleDarkMode}
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
-      {darkMode ? <Sun className="size-5" /> : <Moon className="size-5" />}
+      {theme === "dark" ? <Sun className="size-5" /> : <Moon className="size-5" />}
     </Button>
   );
 }

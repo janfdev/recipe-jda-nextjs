@@ -34,7 +34,7 @@ const Page = () => {
         router.push("/");
       }
     }
-  }, [session]);
+  }, []);
 
   const handleRegister = async () => {
     setIsLoading(true);

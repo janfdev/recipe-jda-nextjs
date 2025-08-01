@@ -52,29 +52,48 @@ export type TopMenuTypes = {
 
 // types/type.ts
 
-export type RecipeTypes = {
+// export type RecipeTypes = {
+//   id: string;
+//   title: string;
+//   description: string;
+//   image: string | StaticImageData;
+//   date: string;
+//   categoryId: string;
+//   category: {
+//     name: string;
+//   };
+//   prepTime: number;
+//   cookTime: number;
+//   servings: number;
+//   difficulty: string;
+//   rating?: number;
+//   ingredients: {
+//     id: string;
+//     ingredient: string;
+//   }[];
+//   instruction: {
+//     id: string;
+//     step: string;
+//   }[];
+//   tags: string[];
+// };
+
+export type RecipeDetailType = {
   id: string;
   title: string;
   description: string;
-  image: string | StaticImageData;
   date: string;
-  category: {
-    name: string;
-  };
-  prepTime: number;
-  cookTime: number;
+  image: string | StaticImageData;
+  rating: number;
   servings: number;
   difficulty: string;
-  rating?: number;
-  ingredients: {
-    id: string;
-    ingredient: string;
-  }[];
-  instruction: {
-    id: string;
-    step: string;
-  }[];
-  tags: string[];
+  prepTime: number;
+  cookTime: number;
+  categoryId: string;
+  category?: { name: string };
+  tags?: { tag: { name: string } }[];
+  ingredients?: { name: string }[];
+  instructions?: { step: string }[];
 };
 
 export type CategoryTypes = {

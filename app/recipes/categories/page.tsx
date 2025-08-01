@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { RecipeTypes, LoadingState } from "@/lib/types/type";
+import { LoadingState, RecipeDetailType } from "@/lib/types/type";
 import axiosInstance from "@/lib/axios";
-import { toast } from "react-toastify";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CategorySectionPage from "@/components/section/category-section";
@@ -15,7 +14,7 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState<
     { id: string; name: string; count: number }[]
   >([]);
-  const [recipes, setRecipes] = useState<RecipeTypes[]>([]);
+  const [recipes, setRecipes] = useState<RecipeDetailType[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null
   );
@@ -29,12 +28,14 @@ export default function CategoriesPage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading((prev) => ({ ...prev, fetch: true })); // Tambahkan ini
+
       try {
         const [categoryRes, recipeRes] = await Promise.all([
-          axiosInstance.get("/api/categories/with-count"),
+          axiosInstance.get("/api/categories?include=count"),
           axiosInstance.get("/api/recipes")
         ]);
-        setCategories(categoryRes.data.data); // format: [{ id, name, count }]
+        setCategories(categoryRes.data.data);
         setRecipes(recipeRes.data.data);
       } catch (err) {
         console.error("Failed to load data", err);
@@ -50,6 +51,8 @@ export default function CategoriesPage() {
     ? recipes.filter((r) => r.categoryId === selectedCategoryId)
     : recipes;
 
+  console.log(selectedCategoryId);
+
   return (
     <main className="py-4 px-4 min-h-screen flex flex-col  mx-auto bg-background">
       <Header />
@@ -58,7 +61,7 @@ export default function CategoriesPage() {
       <section className="container mx-auto py-20 px-4 max-w-7xl">
         <h1 className="text-2xl font-bold mb-6">Category List</h1>
 
-        {isLoading ? (
+        {isLoading.fetch ? (
           <div>Loading...</div>
         ) : (
           <div className="flex flex-wrap gap-3 mb-10">
@@ -78,7 +81,7 @@ export default function CategoriesPage() {
                   selectedCategoryId === cat.id ? "bg-primary text-white" : ""
                 }`}
               >
-                {cat.name} ({cat.count})
+                {cat.name} ({cat.count ?? 0})
               </Badge>
             ))}
           </div>
@@ -104,8 +107,8 @@ export default function CategoriesPage() {
                   src={recipe.image}
                   alt="image"
                   width={500}
-                  height={300}
-                  className="w-full h-40 object-cover rounded-lg"
+                  height={500}
+                  className="w-auto h-auto object-cover rounded-lg"
                 />
                 <h3 className="font-semibold text-lg mb-2 group-hover:text-accent-foreground transition-colors">
                   {recipe.title}
