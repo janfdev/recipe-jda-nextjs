@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
         : undefined
     });
 
-    const data = categories.map((cat) => ({
+    const data = categories.map((cat: { id: string; name: string; _count?: { recipes: number } }) => ({
       id: cat.id,
       name: cat.name,
       count: includeCount ? cat._count?.recipes ?? 0 : undefined
