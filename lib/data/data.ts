@@ -28,11 +28,6 @@ export const navItemsDashboard = [
     url: "/admin/dashboard/categories",
     icon: Panda
   },
-  {
-    name: "My Profile",
-    url: "/admin/dashboard/profile",
-    icon: User
-  }
 ];
 
 export const navItemsFooter = [

@@ -14,7 +14,7 @@ import axios from "axios";
 import { User, LogOut, MessageSquare } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+
 
 export const AvatarUser = () => {
   const [userInfo, setUserInfo] = useState<{
@@ -68,19 +68,6 @@ export const AvatarUser = () => {
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/user/my-profile" className="flex items-center">
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/user/my-comment" className="flex items-center">
-            <MessageSquare className="mr-2 h-4 w-4" />
-            <span>Komentar Saya</span>
-          </Link>
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4" />
