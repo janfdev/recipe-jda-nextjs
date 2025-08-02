@@ -17,6 +17,14 @@ import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { z } from "zod";
+
+const registerSchema = z.object({
+  name: z.string().min(5, "Nama minimal 5 karakter"),
+  email: z.string().email("Email tidak valid"),
+  password: z.string().min(6, "Password minimal 6 karakter")
+});
 
 const Page = () => {
   const [registerEmail, setRegisterEmail] = useState<string>("");
@@ -34,30 +42,54 @@ const Page = () => {
         router.push("/");
       }
     }
-  });
+  }, [session, router]);
 
-  const handleRegister = async () => {
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
-    console.log("Register user: ", { email: registerEmail });
 
-    const res = await axiosInstance.post("/api/auth/signup", {
+    const validation = registerSchema.safeParse({
       name: registerName,
       email: registerEmail,
       password: registerPassword
     });
 
-    if (res.data.success) {
-      localStorage.setItem("Email Register", registerEmail);
-      await signIn("credentials", {
-        redirect: true,
-        email: registerEmail,
-        password: registerPassword,
-        name: registerName,
-        callbackUrl: "/"
-      });
-    } else {
+    if (!validation.success) {
       setIsLoading(false);
-      console.log("Failed");
+      validation.error.issues.forEach((err) => {
+        toast.error(err.message);
+      });
+      return;
+    }
+
+    try {
+      const res = await axiosInstance.post("/api/auth/signup", {
+        name: registerName,
+        email: registerEmail,
+        password: registerPassword
+      });
+
+      if (res.data.success) {
+        localStorage.setItem("Email Register", registerEmail);
+        toast.success("Registrasi berhasil");
+        await signIn("credentials", {
+          redirect: true,
+          email: registerEmail,
+          password: registerPassword,
+          callbackUrl: "/"
+        });
+      } else {
+        if (res.data.message === "User already exists") {
+          toast.error("Email sudah terdaftar, silakan login");
+        } else {
+          toast.error("Registrasi gagal");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Terjadi kesalahan server");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,7 +108,7 @@ const Page = () => {
           Please input your name, email
         </CardDescription>
         <CardContent>
-          <form action="">
+          <form>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="name">Username</Label>
@@ -115,7 +147,11 @@ const Page = () => {
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full" onClick={handleRegister}>
+          <Button
+            type="submit"
+            className="w-full cursor-pointer"
+            onClick={handleRegister}
+          >
             {isLoading ? "Loading..." : "Register"}
           </Button>
           <span className="text-sm flex items-center gap-1">

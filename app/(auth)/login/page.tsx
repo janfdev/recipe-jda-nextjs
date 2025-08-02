@@ -16,6 +16,12 @@ import { Hamburger } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import z from "zod";
+const loginSchema = z.object({
+  email: z.string().email("Email tidak valid"),
+  password: z.string().min(6, "Password minimal 6 karakter")
+});
 const Page = () => {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
@@ -35,19 +41,37 @@ const Page = () => {
 
   const handleLogin = async () => {
     setIsLoading(true);
+
+    const validation = loginSchema.safeParse({
+      email: email,
+      password: password
+    });
+
+    if (!validation.success) {
+      setIsLoading(false);
+      validation.error.issues.forEach((err) => {
+        toast.error(err.message);
+      });
+      return;
+    }
+
     const res = await signIn("credentials", {
       redirect: false,
       email,
       password
     });
 
-    if (res?.error) {
-      console.log("Login error: ", res.error);
-      setIsLoading(false);
-    } else {
+    setIsLoading(true);
+
+    if (res?.ok && !res?.error) {
+      toast.success("Login Berhasil");
       router.push("/");
-      setIsLoading(false);
+    } else {
+      console.log("Login error: ", res?.error || "Unknown error");
+      toast.error("Login Gagal, silahkan coba kembali");
     }
+
+    setIsLoading(false);
   };
 
   return (
