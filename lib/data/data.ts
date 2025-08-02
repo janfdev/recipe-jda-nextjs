@@ -1,5 +1,5 @@
 import { CategoryTypes } from "../types/type";
-import { Album, Home, Panda, User } from "lucide-react";
+import { Album, Home, Panda} from "lucide-react";
 
 export const categories: CategoryTypes[] = [
   {
