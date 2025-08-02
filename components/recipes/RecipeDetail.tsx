@@ -1,16 +1,17 @@
 "use client";
+
 import { useRecipe } from "@/hooks/useRecipe";
-import RecipeSkeleton from "./RecipeSkeleton";
-import { ChefHat, Clock, Star, Users } from "lucide-react";
+import { AlarmClockCheck, ChefHat, Clock, Star, Users } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import RecipeActionButtons from "./RecipeActionsButton";
+import RecipeDetailsSkeleton from "./skeleton/RecipeDetailsSkeleton";
 
 export default function RecipeDetailComponent({ id }: { id: string }) {
   const { recipe, loading } = useRecipe(id);
 
-  if (loading) return <RecipeSkeleton />;
+  if (loading) return <RecipeDetailsSkeleton />;
 
   if (!recipe) return <p>Resep tidak ditemukan</p>;
 
@@ -51,8 +52,12 @@ export default function RecipeDetailComponent({ id }: { id: string }) {
             <div className="flex flex-wrap gap-2 mb-6">
               {recipe?.tags?.map(
                 (tag: { tag: { name: string } }, index: number) => (
-                  <Badge key={`${index}-${tag.tag.name}`} variant="secondary">
-                    {tag.tag.name}
+                  <Badge
+                    key={`${index}-${tag.tag.name}`}
+                    variant="secondary"
+                    className="lowercase"
+                  >
+                    #{tag.tag.name}
                   </Badge>
                 )
               )}
@@ -77,37 +82,45 @@ export default function RecipeDetailComponent({ id }: { id: string }) {
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Card>
-          <CardContent className="flex items-center space-x-3 p-4">
-            <Clock className="h-5 w-5 text-primary" />
-            <div>
-              <p className="text-sm text-muted-foreground">Prep Time</p>
-              <p className="font-semibold">{recipe?.prepTime}</p>
+          <CardContent className="flex flex-col justify-center items-center p-2">
+            <div className="rounded-full p-2 bg-primary/20 mb-3">
+              <Clock className="h-7 w-7 text-primary" />
+            </div>
+            <div className="flex flex-col gap-2 items-center">
+              <p className="text-sm text-muted-foreground">Waktu Persiapan</p>
+              <p className="font-semibold">{recipe?.prepTime} Menit</p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="flex items-center space-x-3 p-4">
-            <Clock className="h-5 w-5 text-primary" />
-            <div>
-              <p className="text-sm text-muted-foreground">Cook Time</p>
+          <CardContent className="flex flex-col justify-center items-center p-2">
+            <div className="rounded-full p-2 bg-primary/20 mb-3">
+              <AlarmClockCheck className="h-7 w-7 text-primary" />
+            </div>
+            <div className="flex flex-col gap-2 items-center">
+              <p className="text-sm text-muted-foreground">Waktu Masak</p>
               <p className="font-semibold">{recipe?.cookTime}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="flex items-center space-x-3 p-4">
-            <Users className="h-5 w-5 text-primary" />
-            <div>
-              <p className="text-sm text-muted-foreground">Servings</p>
+          <CardContent className="flex flex-col justify-center  items-center p-4">
+            <div className="rounded-full p-2 bg-primary/20 mb-3">
+              <Users className="h-7 w-7 text-primary" />
+            </div>
+            <div className="flex flex-col gap-2 items-center">
+              <p className="text-sm text-muted-foreground">Porsi</p>
               <p className="font-semibold">{recipe?.servings}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="flex items-center space-x-3 p-4">
-            <ChefHat className="h-5 w-5 text-primary" />
-            <div>
-              <p className="text-sm text-muted-foreground">Difficulty</p>
+          <CardContent className="flex flex-col justify-center items-center p-4">
+            <div className="rounded-full p-2 bg-primary/20 mb-3">
+              <ChefHat className="h-7 w-7 text-primary" />
+            </div>
+            <div className="flex flex-col gap-2 items-center">
+              <p className="text-sm text-muted-foreground">Kesulitan</p>
               <p className="font-semibold">{recipe?.difficulty}</p>
             </div>
           </CardContent>

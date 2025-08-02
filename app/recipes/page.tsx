@@ -6,18 +6,13 @@ import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import Header from "@/components/layout/Header";
 import HeroPage from "@/components/section/browse-section";
-import { LoadingState, RecipeDetailType } from "@/lib/types/type";
+import { RecipeDetailType } from "@/lib/types/type";
 import axiosInstance from "@/lib/axios";
+import HomeRecipeSkeleton from "@/components/recipes/skeleton/HomeRecipeSkeleton";
 
 const RecipesPage = () => {
   const [recipes, setRecipes] = useState<RecipeDetailType[]>([]);
-  const [isLoading, setIsLoading] = useState<LoadingState>({
-    fetch: false,
-    add: false,
-    edit: false,
-    delete: false
-  });
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const formatDateWithTime = (date: string) => {
     return new Date(date).toLocaleDateString("id-ID", {
       day: "2-digit",
@@ -28,7 +23,7 @@ const RecipesPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading((prev) => ({ ...prev, fetch: true }));
+      setIsLoading(true);
       try {
         const recipeRes = await axiosInstance.get("/api/recipes");
 
@@ -36,7 +31,7 @@ const RecipesPage = () => {
       } catch (err) {
         console.error("Failed to load data", err);
       } finally {
-        setIsLoading((prev) => ({ ...prev, fetch: false }));
+        setIsLoading(false);
       }
     };
 
@@ -50,8 +45,8 @@ const RecipesPage = () => {
         <HeroPage />
       </div>
 
-      {isLoading.fetch ? (
-        <div>Loading....</div>
+      {isLoading ? (
+       <HomeRecipeSkeleton/>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {recipes.map((recipe) => (

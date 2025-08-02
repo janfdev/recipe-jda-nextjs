@@ -1,8 +1,8 @@
 import React from "react";
-import { Skeleton } from "../ui/skeleton";
-import { Card, CardContent } from "../ui/card";
+import { Skeleton } from "../../ui/skeleton";
+import { Card, CardContent } from "../../ui/card";
 
-const RecipeSkeleton = () => {
+const RecipeDetailsSkeleton = () => {
   return (
     <section className="container mx-auto px-4 py-20 space-y-10">
       <div className="grid lg:grid-cols-2 gap-8 mb-8">
@@ -11,7 +11,6 @@ const RecipeSkeleton = () => {
             <Skeleton className="h-9 w-1/3" />
             <Skeleton className="h-7 w-1/2" />
 
-            {/* Rate */}
             <Skeleton className="h-6 w-1/3" />
             <Skeleton className="h-5 w-1/3" />
             <div className="flex items-center space-x-4 mb-4">
@@ -35,26 +34,13 @@ const RecipeSkeleton = () => {
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <Card>
-          <CardContent className="flex items-center space-x-3 p-4">
-            <Skeleton className="h-[50px]" />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="flex items-center space-x-3 p-4">
-            <Skeleton className="h-[50px]" />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="flex items-center space-x-3 p-4">
-            <Skeleton className="h-[50px]" />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="flex items-center space-x-3 p-4">
-            <Skeleton className="h-[50px]" />
-          </CardContent>
-        </Card>
+        {[...Array(4)].map((_, i) => (
+          <Card key={i}>
+            <CardContent className="flex items-center space-x-3 p-4">
+              <Skeleton className="h-[110px]" />
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
@@ -81,4 +67,4 @@ const RecipeSkeleton = () => {
   );
 };
 
-export default RecipeSkeleton;
+export default RecipeDetailsSkeleton;
