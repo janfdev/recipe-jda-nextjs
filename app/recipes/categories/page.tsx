@@ -6,10 +6,8 @@ import axiosInstance from "@/lib/axios";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CategorySectionPage from "@/components/section/category-section";
-import Link from "next/link";
-import Image from "next/image";
-import { ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import RecipeCard from "@/components/recipes/RecipeCard";
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<
     { id: string; name: string; count: number }[]
@@ -25,14 +23,6 @@ export default function CategoriesPage() {
     edit: false,
     delete: false
   });
-
-  const formatDateWithTime = (date: string) => {
-    return new Date(date).toLocaleDateString("id-ID", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric"
-    });
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,7 +52,7 @@ export default function CategoriesPage() {
   console.log(selectedCategoryId);
 
   return (
-    <main className="py-4 px-4 min-h-screen flex flex-col  mx-auto bg-background">
+    <main className="py-4 px-4 min-h-screen flex flex-col mx-auto bg-background">
       <Header />
       <CategorySectionPage />
 
@@ -72,11 +62,13 @@ export default function CategoriesPage() {
         {isLoading.fetch ? (
           <div>Loading...</div>
         ) : (
-          <div className="flex flex-wrap gap-3 mb-10">
+          <div className="flex items-center justify-center flex-wrap gap-3 mb-10">
             <Badge
               onClick={() => setSelectedCategoryId(null)}
               className={`cursor-pointer ${
-                selectedCategoryId === null ? "bg-primary text-white" : ""
+                selectedCategoryId === null
+                  ? "bg-primary text-white"
+                  : "text-accent bg-primary"
               }`}
             >
               All
@@ -86,7 +78,9 @@ export default function CategoriesPage() {
                 key={cat.id}
                 onClick={() => setSelectedCategoryId(cat.id)}
                 className={`cursor-pointer ${
-                  selectedCategoryId === cat.id ? "bg-primary text-white" : ""
+                  selectedCategoryId === cat.id
+                    ? "bg-primary text-white"
+                    : "bg-primary text-accent"
                 }`}
               >
                 {cat.name} ({cat.count ?? 0})
@@ -97,44 +91,7 @@ export default function CategoriesPage() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {filteredRecipes.map((recipe) => (
-            <Link
-              key={recipe.id}
-              href={`/recipes/details/${recipe.id}`}
-              className="group flex cursor-pointer flex-col bg-card p-6 rounded-xl shadow-sm transition-all hover:shadow-md hover:translate-y-[-4px] hover:bg-accent hover:text-accent-foreground border border-transparent hover:border-accent-foreground/10"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs text-muted-foreground">
-                  {recipe.category?.name}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {formatDateWithTime(recipe.date)}
-                </span>
-              </div>
-              <div className="flex flex-col gap-2 mb-4">
-                <Image
-                  src={recipe.image}
-                  alt="image"
-                  width={500}
-                  height={500}
-                  className="w-auto h-auto object-cover rounded-lg"
-                />
-                <h3 className="font-semibold text-lg mb-2 group-hover:text-accent-foreground transition-colors">
-                  {recipe.title}
-                </h3>
-                <p className="text-sm text-muted-foreground group-hover:text-accent-foreground/80 transition-colors">
-                  {recipe.description}
-                </p>
-              </div>
-              <div className="mt-auto pt-4 flex items-center text-xs font-medium">
-                <span className="text-primary group-hover:text-accent-foreground transition-colors flex gap-2 items-center">
-                  <p>Baca Resep</p>
-                  <ChevronRight
-                    className="group-hover:translate-x-1 transition-all"
-                    size={13}
-                  />
-                </span>
-              </div>
-            </Link>
+            <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
       </section>

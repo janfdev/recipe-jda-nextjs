@@ -13,7 +13,6 @@ import {
 import axios from "axios";
 import { LogOut, LayoutDashboard } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const AvatarAdmin = () => {
@@ -49,15 +48,15 @@ export const AvatarAdmin = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <span className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             {userInfo?.image ? (
-              <AvatarImage src={userInfo.image} alt={userInfo.name}/>
+              <AvatarImage src={userInfo.image} alt={userInfo.name} />
             ) : (
               <AvatarFallback>{handleInitials(userInfo.name)}</AvatarFallback>
             )}
           </Avatar>
-        </Button>
+        </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">

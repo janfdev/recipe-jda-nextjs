@@ -44,7 +44,9 @@ export default function RecentComments() {
     <Card>
       <CardHeader>
         <CardTitle>Komentar Terbaru Pengguna</CardTitle>
-        <CardDescription>Umpan balik terbaru dari pengguna website ini </CardDescription>
+        <CardDescription>
+          Umpan balik terbaru dari pengguna website ini{" "}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -69,24 +71,20 @@ export default function RecentComments() {
               >
                 <Avatar>
                   <AvatarImage
-                    src={comment.user?.image || "/placeholder.svg"}
-                    alt={comment.user?.name || "User"}
+                    src={comment.user?.image}
+                    alt={comment.user?.name}
                   />
-                  <AvatarFallback>
-                    {comment.user?.name?.[0] || "U"}
-                  </AvatarFallback>
+                  <AvatarFallback>{comment.user?.name?.[0]}</AvatarFallback>
                 </Avatar>
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-semibold">
-                      {comment.user?.name || "Anonymous"}
-                    </h4>
+                    <h4 className="font-semibold">{comment.user?.name}</h4>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     {comment.content}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Recipe: {comment.recipe?.title}
+                    Resep : {comment.recipe?.title}
                   </p>
                 </div>
               </div>

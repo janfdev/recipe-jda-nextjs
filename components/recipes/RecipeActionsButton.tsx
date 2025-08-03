@@ -19,7 +19,7 @@ export default function RecipeActionButtons() {
   return (
     <div className="flex flex-wrap gap-3">
       <Button onClick={handleSave}>
-        <Heart className="h-4 w-4 mr-2" />
+        <Heart className="h-4 w-4 mr-2 text-accent" />
         Save Recipe
       </Button>
       <Button variant="outline" onClick={handleShare}>

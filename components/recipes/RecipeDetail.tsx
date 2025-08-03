@@ -1,6 +1,6 @@
 "use client";
 
-import { useRecipe } from "@/hooks/useRecipe";
+import { useRecipe } from "@/hooks/use-recipe";
 import { AlarmClockCheck, ChefHat, Clock, Star, Users } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
@@ -73,9 +73,9 @@ export default function RecipeDetailComponent({ id }: { id: string }) {
           <Image
             src={recipe.image}
             alt={recipe?.title}
-            width={600}
-            height={400}
-            className="rounded-lg object-cover w-auto h-auto"
+            width={1000}
+            height={1000}
+            className="rounded-lg object-cover w-full h-full"
           />
         </div>
       </div>

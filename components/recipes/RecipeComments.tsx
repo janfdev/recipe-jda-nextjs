@@ -1,5 +1,5 @@
 "use client";
-import { useComments } from "@/hooks/useComments";
+import { useComments } from "@/hooks/use-comment";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
@@ -18,7 +18,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import SpinnerCircle from "../spinner";
-import { useRecipe } from "@/hooks/useRecipe";
+import { useRecipe } from "@/hooks/use-recipe";
 
 type Comment = {
   id: string;

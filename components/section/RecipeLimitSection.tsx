@@ -1,6 +1,6 @@
 "use client";
 
-import { useLimitRecipes } from "@/hooks/useLimitRecipe";
+import { useLimitRecipes } from "@/hooks/use-limit-recipe";
 import Link from "next/link";
 import HomeRecipeSkeleton from "../recipes/skeleton/HomeRecipeSkeleton";
 import { ChevronRight } from "lucide-react";
@@ -12,9 +12,9 @@ export default function RecipeLimitSection() {
   return (
     <div className="py-4 px-4 min-h-screen flex flex-col w-full max-w-7xl mx-auto">
       <div className="flex items-center w-full justify-between pb-4">
-        <h2 className="text-2xl flex items-start">Latest</h2>
+        <h2 className="text-2xl flex items-start">Terbaru</h2>
         <Link href="/recipes" className="text-xs group flex items-center gap-1">
-          <p>Show All Recipe</p>
+          <p>Lihat Semua Resep</p>
           <ChevronRight
             className="group-hover:translate-x-1 transition-all"
             width={15}
