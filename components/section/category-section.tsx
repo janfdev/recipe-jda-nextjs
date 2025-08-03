@@ -7,7 +7,7 @@ const CategorySectionPage = () => {
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-6">
       <div className="text-center max-w-2xl">
-        <Badge className="bg-primary rounded-full py-1 border-none">
+        <Badge className="bg-primary rounded-full py-1 text-accent border-none">
           <Grid2x2Plus />
           Kategori Resep
         </Badge>
@@ -19,7 +19,7 @@ const CategorySectionPage = () => {
           dari ide sarapan cepat hingga pesta makan malam yang mewah.
         </p>
         <div className="mt-12 flex items-center justify-center gap-4">
-          <Button size="lg" className="rounded-full text-base">
+          <Button size="lg" className="rounded-full text-accent text-base">
             Cari Kategori <ArrowUpRight className="!h-5 !w-5" />
           </Button>
         </div>

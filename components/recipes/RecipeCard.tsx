@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, TicketCheck } from "lucide-react";
 import { RecipeDetailType } from "@/lib/types/type";
 
 export default function RecipeCard({ recipe }: { recipe: RecipeDetailType }) {
@@ -19,7 +19,8 @@ export default function RecipeCard({ recipe }: { recipe: RecipeDetailType }) {
       className="group flex cursor-pointer flex-col bg-card p-6 rounded-xl shadow-sm transition-all hover:shadow-md hover:translate-y-[-4px] hover:bg-accent hover:text-accent-foreground border border-transparent hover:border-accent-foreground/10"
     >
       <div className="flex items-center justify-between mb-4">
-        <span className="text-xs text-muted-foreground">
+        <span className="text-xs flex items-center gap-2 text-muted-foreground">
+          <TicketCheck className="w-4 h-4" />
           {recipe.category?.name}
         </span>
         <span className="text-xs text-muted-foreground">

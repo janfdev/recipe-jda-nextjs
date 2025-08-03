@@ -12,7 +12,7 @@ const Hero = () => {
       <Cookie className="float-fast absolute bottom-[10%] right-[10%] md:right-[5%] size-12 md:size-20 text-yellow-500/30" />
 
       <div className="flex items-center justify-center flex-col text-center max-w-2xl py-10">
-        <Badge className="bg-primary rounded-full py-1 border-none px-3 flex gap-2 items-center justify-center">
+        <Badge className="bg-primary text-accent rounded-full py-1 border-none px-3 flex gap-2 items-center justify-center">
           <UtensilsCrossed className="w-4 h-4" />
           Resep Rumahan
         </Badge>
@@ -25,7 +25,7 @@ const Hero = () => {
           temukan di sini. Gratis, mudah, dan praktis!
         </p>
         <div className="mt-12 flex items-center justify-center gap-4">
-          <Button size="lg" className="rounded-full text-base">
+          <Button size="lg" className="rounded-full text-base text-accent">
             Jelajahi Sekarang <ArrowUpRight className="!h-5 !w-5 ml-2" />
           </Button>
         </div>

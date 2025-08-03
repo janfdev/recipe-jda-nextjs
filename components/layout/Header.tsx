@@ -131,12 +131,15 @@ export default function Header() {
           </div>
 
           <motion.button
-            className="hover:bg-muted rounded-lg p-2 transition-colors duration-200 lg:hidden"
+            className="flex items-center gap-4 hover:bg-muted rounded-lg p-2 transition-colors duration-200 lg:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileTap={{ scale: 0.95 }}
           >
+            {session?.user.role === "ADMIN" ? <AvatarAdmin /> : <AvatarUser />}
             {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
+              <>
+                <X className="h-6 w-6" />
+              </>
             ) : (
               <div className="flex items-center gap-x-2">
                 <Menu className="h-6 w-6" />
@@ -167,11 +170,8 @@ export default function Header() {
                   </Link>
                 ))}
                 <div className="space-y-2 px-4 py-2">
-                  {session?.user ? (
-                    <AvatarUser />
-                  ) : (
+                  {!session?.user ? (
                     <>
-                      <ModeToggle />
                       <Link
                         href="/login"
                         className="hover:bg-muted block w-full text-amber-500 border border-white rounded-lg py-2.5 text-center font-medium transition-colors duration-200"
@@ -187,6 +187,8 @@ export default function Header() {
                         Get Started
                       </Link>
                     </>
+                  ) : (
+                    <ModeToggle />
                   )}
                 </div>
               </div>

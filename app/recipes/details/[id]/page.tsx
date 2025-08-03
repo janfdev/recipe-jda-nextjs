@@ -21,10 +21,12 @@ export default function RecipesDetails({
 }) {
   const { id } = use(params);
   return (
-    <main className="py-4 px-4 min-h-screen flex flex-col max-w-7xl mx-auto bg-background">
+    <main className="py-4 px-4 min-h-screen flex flex-col mx-auto bg-background">
       <Header />
-      <RecipeDetailComponent id={id} />
-      <RecipeComments recipeId={id} />
+      <section className="container mx-auto py-12 px-4 max-w-7xl">
+        <RecipeDetailComponent id={id} />
+        <RecipeComments recipeId={id} />
+      </section>
       <Footer />
     </main>
   );

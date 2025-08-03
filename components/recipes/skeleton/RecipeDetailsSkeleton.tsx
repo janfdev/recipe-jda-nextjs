@@ -29,7 +29,7 @@ const RecipeDetailsSkeleton = () => {
         </div>
 
         <div className="relative">
-          <Skeleton className="w-full h-[300px] rounded-lg" />
+          <Skeleton className="w-full h-[370px] rounded-lg" />
         </div>
       </div>
 

@@ -11,12 +11,13 @@ import {
   DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
 import axios from "axios";
-import {  LogOut } from "lucide-react";
+import { LogOut, MessageSquare, User } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button";
-
+import Link from "next/link";
+import { Skeleton } from "./ui/skeleton";
 
 export const AvatarUser = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<{
     name: string;
     email: string;
@@ -34,10 +35,13 @@ export const AvatarUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setIsLoading(true);
         const res = await axios.get("/api/user/me");
         setUserInfo(res.data.data);
       } catch (error) {
         console.error("Failed to fetch user:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -49,15 +53,17 @@ export const AvatarUser = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <span className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            {userInfo?.image ? (
+            {isLoading ? (
+              <Skeleton className="w-10 h-10 rounded-full" />
+            ) : userInfo?.image ? (
               <AvatarImage src={userInfo.image} alt={userInfo.name} />
             ) : (
               <AvatarFallback>{handleInitials(userInfo.name)}</AvatarFallback>
             )}
           </Avatar>
-        </Button>
+        </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
@@ -68,6 +74,19 @@ export const AvatarUser = () => {
             </p>
           </div>
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Link href="/user/my-profile" className="flex items-center">
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/user/my-comment" className="flex items-center">
+            <MessageSquare className="mr-2 h-4 w-4" />
+            <span>Komentar Saya</span>
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4" />
