@@ -127,7 +127,10 @@ const Page = () => {
           </Button>
           <span className="text-sm flex items-center gap-1">
             Dont have an account?
-            <Link href={"/register"} className="font-semibold hover:underline">
+            <Link
+              href={"/register"}
+              className="text-primary font-semibold hover:underline"
+            >
               <p>Register</p>
             </Link>{" "}
           </span>

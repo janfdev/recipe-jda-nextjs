@@ -156,7 +156,10 @@ const Page = () => {
           </Button>
           <span className="text-sm flex items-center gap-1">
             Already have an account?
-            <Link href={"/login"} className="font-semibold hover:underline">
+            <Link
+              href={"/login"}
+              className="text-primary font-semibold hover:underline"
+            >
               <p>Login</p>
             </Link>{" "}
           </span>
