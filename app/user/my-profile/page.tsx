@@ -13,8 +13,8 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Pencil } from "lucide-react";
+import { toast } from "react-toastify";
 
 type UserProfile = {
   id: string;
@@ -91,12 +91,14 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <Link href="/user/my-profile/update">
-                <Button variant="outline" className="gap-2">
-                  <Pencil className="w-4 h-4" />
-                  Edit Profil
-                </Button>
-              </Link>
+              <Button
+                variant="outline"
+                className="gap-2"
+                onClick={() => toast.info("Fitur sedang di perbaiki")}
+              >
+                <Pencil className="w-4 h-4" />
+                Edit Profil
+              </Button>
             </div>
           </CardContent>
         </Card>
