@@ -15,16 +15,10 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Pencil } from "lucide-react";
-
-type UserProfile = {
-  id: string;
-  name: string;
-  email: string;
-  image: string;
-};
+import { UserDetails } from "./update/page";
 
 export default function ProfilePage() {
-  const [user, setUser] = useState<UserProfile>();
+  const [user, setUser] = useState<UserDetails>();
 
   const getProfile = async () => {
     try {

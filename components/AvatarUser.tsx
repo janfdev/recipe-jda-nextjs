@@ -16,13 +16,16 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { Skeleton } from "./ui/skeleton";
 
+export type UserDetails = {
+  id: string;
+  name: string;
+  email: string;
+  image?: string;
+};
+
 export const AvatarUser = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState<{
-    name: string;
-    email: string;
-    image: string;
-  } | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [userInfo, setUserInfo] = useState<UserDetails | null>(null);
 
   const handleInitials = (name: string) => {
     return name
@@ -35,7 +38,6 @@ export const AvatarUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        setIsLoading(true);
         const res = await axios.get("/api/user/me");
         setUserInfo(res.data.data);
       } catch (error) {

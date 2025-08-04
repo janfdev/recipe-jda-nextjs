@@ -19,7 +19,10 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 
-type UserDetails = {
+export type UserDetails = {
+  id: string;
+  name: string;
+  email: string;
   image?: string;
 };
 
@@ -66,6 +69,9 @@ export default function ProfilePage() {
     try {
       const res = await axiosInstance.get("/api/user/me");
       setUser(res.data);
+      setName(res.data.name);
+      setEmail(res.data.email);
+      setAvatarUrl(res.data.image);
     } catch (error) {
       console.error("Gagal mengambil data user", error);
     }
@@ -79,10 +85,10 @@ export default function ProfilePage() {
     e.preventDefault();
 
     try {
-      const res = await axiosInstance.post("/api/user", {
-        name,
-        email,
-        image: avatarUrl
+      const res = await axiosInstance.patch("/api/user", {
+        name: name || user?.name,
+        email: email || user?.email,
+        image: avatarUrl || user?.image
       });
 
       setUser(res.data.data);
@@ -103,7 +109,9 @@ export default function ProfilePage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="/user/my-profile">My Profile</BreadcrumbLink>
+              <BreadcrumbLink href="/user/my-profile">
+                My Profile
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
