@@ -11,7 +11,7 @@ export async function PATCH(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { name, email, image } = body;
+  const { name, image } = body;
 
   try {
     const updatedUser = await prisma.user.update({
@@ -20,13 +20,11 @@ export async function PATCH(req: NextRequest) {
       },
       data: {
         name: name || undefined,
-        email: email || undefined,
         image: image || undefined
       },
       select: {
         id: true,
         name: true,
-        email: true,
         image: true
       }
     });

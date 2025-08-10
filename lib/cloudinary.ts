@@ -26,7 +26,7 @@ export async function uploadToCloudinary(
 ): Promise<CloudinaryUploadResult> {
   try {
     const result = await cloudinary.uploader.upload(file as string, {
-      folder: "reciverse",
+      folder: options.folder || "reciverse",
       public_id: options.public_id,
       transformation: options.transformation,
       resource_type: options.resource_type || "auto",

@@ -124,7 +124,7 @@ export default function ProfilePage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="/user/my-profile">
+              <BreadcrumbLink href="/admin/dashboard/profile/">
                 My Profile
               </BreadcrumbLink>
             </BreadcrumbItem>
