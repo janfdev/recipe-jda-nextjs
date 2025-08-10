@@ -11,7 +11,7 @@ ReciVerse is a full-stack recipe sharing application built with the Next.js App 
 - **Cloud-Based Image Uploads:** Seamless image handling for recipes and user profiles using Cloudinary.
 - **Interactive Commenting:** Registered users can engage with recipes by leaving comments.
 - **Advanced Recipe Browsing:** Soon Feature.
-- **User Profile Management:** Soon Feature.
+- **User Profile Management:** Now Admin and user can update name and profile.
 - **Modern UI/UX:** Built with shadcn/ui and Tailwind CSS, featuring a responsive design and a dark/light mode toggle.
 
 ## 🛠️ Tech Stack
