@@ -72,7 +72,7 @@ export default function ProfilePage() {
                   <AvatarImage src={user.image} alt="User Avatar" />
                 ) : (
                   <AvatarFallback>
-                    {user?.name?.charAt(0).toUpperCase() ?? "U"}
+                    {user?.name?.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 )}
               </Avatar>

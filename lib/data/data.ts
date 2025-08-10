@@ -1,5 +1,5 @@
 import { CategoryTypes } from "../types/type";
-import { Album, Home, Panda} from "lucide-react";
+import { Album, Home, Panda, User } from "lucide-react";
 
 export const categories: CategoryTypes[] = [
   {
@@ -28,6 +28,11 @@ export const navItemsDashboard = [
     url: "/admin/dashboard/categories",
     icon: Panda
   },
+  {
+    name: "Profile",
+    url: "/admin/dashboard/profile",
+    icon: User
+  }
 ];
 
 export const navItemsFooter = [
