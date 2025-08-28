@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import ModeToggle from "../ui/mode-toggle";
 import { useSession } from "next-auth/react";
-import { AvatarAdmin } from "../admin/avatar-admin";
+import { AvatarAdmin } from "../avatar-admin";
 import { AvatarUser } from "../AvatarUser";
 interface NavItem {
   name: string;

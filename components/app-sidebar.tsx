@@ -6,28 +6,30 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
+  SidebarFooter
 } from "@/components/ui/sidebar";
+
 import { Hamburger } from "lucide-react";
 import Link from "next/link";
-import NavLinks from "./nav-links";
+import { NavMain } from "@/components/nav-main";
+
+import { data } from "@/lib/data/data";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="offcanvas" {...props} className="p-2">
+    <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!py-5"
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <Link href="/">
-                <div className="bg-primary text-primary-foreground rounded-full p-2 flex items-center justify-center">
-                  <Hamburger className="!size-5" />
-                </div>
+              <Link href="#">
+                <Hamburger className="!size-5" />
                 <span className="text-base font-semibold">
-                  ReciVerse Board
+                  ReciVerse Board.
                 </span>
               </Link>
             </SidebarMenuButton>
@@ -35,8 +37,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavLinks />
+        <NavMain items={data.navMain} />
       </SidebarContent>
+      <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>
     </Sidebar>
   );
 }
