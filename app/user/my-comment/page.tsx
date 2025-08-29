@@ -61,7 +61,7 @@ export default function MyComment() {
   }, []);
 
   return (
-    <div className="max-w-5xl mx-7">
+    <div className="max-w-5xl mx-7 mt-7">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

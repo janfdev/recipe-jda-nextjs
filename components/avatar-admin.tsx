@@ -14,6 +14,7 @@ import axios from "axios";
 import { LogOut, LayoutDashboard } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 export const AvatarAdmin = () => {
   const [userInfo, setUserInfo] = useState<{
@@ -69,16 +70,23 @@ export const AvatarAdmin = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/admin/dashboard" className="flex items-center">
+          <Link
+            href="/admin/dashboard"
+            className="w-full flex items-center cursor-pointer"
+          >
             <LayoutDashboard className="mr-2 h-4 w-4" />
             <span>Dashboard</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOut className="mr-2 h-4 w-4" />
-          <button onClick={() => signOut({ callbackUrl: "/" })}>Log out</button>
-        </DropdownMenuItem>
+        <Button
+          variant="destructive"
+          onClick={() => signOut({ callbackUrl: "/" })}
+          className="w-full flex cursor-pointer items-center gap-1 mr-auto justify-start"
+        >
+          <LogOut className="h-4 w-4" />
+          <span>Log out</span>
+        </Button>
       </DropdownMenuContent>
     </DropdownMenu>
   );

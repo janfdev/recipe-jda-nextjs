@@ -12,7 +12,7 @@ import {
 import { Hamburger } from "lucide-react";
 import Link from "next/link";
 import NavLinksUser from "./nav-links-user";
-
+import { data } from "@/lib/data/data";
 const UserSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   return (
     <Sidebar collapsible="offcanvas" {...props} className="p-2">
@@ -23,10 +23,10 @@ const UserSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
               asChild
               className="data-[slot=sidebar-menu-button]:!py-5"
             >
-              <Link href="/">
+              <Link href="#">
                 <div className="bg-primary text-primary-foreground rounded-full p-2 flex gap-2 items-center justify-center">
                   <Hamburger className="!size-5 text-accent" />
-                  <h1 className="text-accent font-semibold">User Dashboard</h1>
+                  <h1 className="text-accent font-semibold">RV Dashboard</h1>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -34,7 +34,7 @@ const UserSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavLinksUser />
+        <NavLinksUser items={data.navUser} />
       </SidebarContent>
     </Sidebar>
   );

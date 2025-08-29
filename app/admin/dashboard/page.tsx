@@ -17,7 +17,6 @@ export default async function AdminDashboardPage() {
         {/* <ChartAreaInteractive /> */}
         <RecentComments />
       </div>
-      {/* <DataTable data={data} /> */}
     </div>
   );
 }

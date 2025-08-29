@@ -1,5 +1,11 @@
 import { CategoryTypes } from "../types/type";
-import { Album, Home, Panda, User } from "lucide-react";
+import {
+  ChartBarStacked,
+  Home,
+  MessageCircleHeart,
+  User,
+  Utensils
+} from "lucide-react";
 
 export const categories: CategoryTypes[] = [
   {
@@ -22,43 +28,32 @@ export const data = {
     {
       title: "Recipes",
       url: "/admin/dashboard/recipes",
-      icon: Album
+      icon: Utensils
     },
     {
       title: "Categories",
       url: "/admin/dashboard/categories",
-      icon: Panda
+      icon: ChartBarStacked
     },
     {
       title: "Profile",
       url: "/admin/dashboard/profile",
       icon: User
     }
+  ],
+  navUser: [
+    {
+      title: "Profile",
+      url: "/user/my-profile",
+      icon: User
+    },
+    {
+      title: "Komentar Saya",
+      url: "/user/my-comment",
+      icon: MessageCircleHeart
+    }
   ]
 };
-
-// export const navItemsDashboard = [
-//   {
-//     name: "Home",
-//     url: "/admin/dashboard",
-//     icon: Home
-//   },
-//   {
-//     name: "Recipes",
-//     url: "/admin/dashboard/recipes",
-//     icon: Album
-//   },
-//   {
-//     name: "Categories",
-//     url: "/admin/dashboard/categories",
-//     icon: Panda
-//   },
-//   {
-//     name: "Profile",
-//     url: "/admin/dashboard/profile",
-//     icon: User
-//   }
-// ];
 
 export const navItemsFooter = [
   {

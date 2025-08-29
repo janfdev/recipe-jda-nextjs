@@ -1,13 +1,15 @@
-"use client";
-
-import { usePathname } from "next/navigation";
-import React from "react";
-import { SidebarGroup, SidebarGroupContent, SidebarMenu } from "./ui/sidebar";
 import { type LucideIcon } from "lucide-react";
-import clsx from "clsx";
-import Link from "next/link";
 
-const NavLinksUser = ({
+import {
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu
+} from "@/components/ui/sidebar";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
+
+export function NavLinksAdmin({
   items
 }: {
   items: {
@@ -15,11 +17,11 @@ const NavLinksUser = ({
     url: string;
     icon?: LucideIcon;
   }[];
-}) => {
+}) {
   const pathname = usePathname();
 
   return (
-    <SidebarGroup className="!mt-4">
+    <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         {items.map((item) => (
           <Link key={item.url} href={item.url}>
@@ -43,6 +45,4 @@ const NavLinksUser = ({
       </SidebarGroupContent>
     </SidebarGroup>
   );
-};
-
-export default NavLinksUser;
+}

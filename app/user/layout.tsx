@@ -1,24 +1,29 @@
-import { AvatarUser } from "@/components/AvatarUser";
-import ModeToggle from "@/components/ui/mode-toggle";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SiteHeader } from "@/components/site-header";
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
 import UserSidebar from "@/components/user-sidebar";
 
 import React from "react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <SidebarProvider>
-      <UserSidebar />
-      <main className="w-full">
-        <div className="flex items-center justify-between p-4">
-          <SidebarTrigger />
-          <div className="flex items-center gap-2">
-            <ModeToggle />
-            <AvatarUser />
-          </div>
-        </div>
-        {children}
-      </main>
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)"
+        } as React.CSSProperties
+      }
+    >
+      <UserSidebar variant="inset" />
+      <SidebarInset>
+        <main className="w-full">
+          <SiteHeader />
+          {children}
+        </main>
+      </SidebarInset>
     </SidebarProvider>
   );
 };

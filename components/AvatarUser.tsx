@@ -15,6 +15,7 @@ import { LogOut, MessageSquare, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { Skeleton } from "./ui/skeleton";
+import { Button } from "./ui/button";
 
 export const AvatarUser = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -75,28 +76,33 @@ export const AvatarUser = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/user/my-profile" className="flex items-center">
+        <DropdownMenuItem asChild>
+          <Link
+            href="/user/my-profile"
+            className="w-full flex items-center cursor-pointer"
+          >
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/user/my-comment" className="flex items-center">
+          <Link
+            href="/user/my-comment"
+            className="flex items-center cursor-pointer"
+          >
             <MessageSquare className="mr-2 h-4 w-4" />
             <span>Komentar Saya</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <button
-            className="flex items-center gap-1"
-            onClick={() => signOut({ callbackUrl: "/" })}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
-          </button>
-        </DropdownMenuItem>
+        <Button
+          variant="destructive"
+          onClick={() => signOut({ callbackUrl: "/" })}
+          className="w-full flex cursor-pointer items-center gap-1 mr-auto justify-start"
+        >
+          <LogOut className="h-4 w-4" />
+          <span>Log out</span>
+        </Button>
       </DropdownMenuContent>
     </DropdownMenu>
   );

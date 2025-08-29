@@ -40,7 +40,7 @@ export default function ProfilePage() {
   }, []);
 
   return (
-    <div className="flex flex-col px-6">
+    <div className="flex flex-col px-6 mt-7">
       <div className="flex mb-8 justify-start">
         <Breadcrumb>
           <BreadcrumbList>

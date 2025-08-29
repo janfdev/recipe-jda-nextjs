@@ -12,7 +12,7 @@ import {
 
 import { Hamburger } from "lucide-react";
 import Link from "next/link";
-import { NavMain } from "@/components/nav-main";
+import { NavLinksAdmin } from "@/components/nav-links-admin";
 
 import { data } from "@/lib/data/data";
 
@@ -37,7 +37,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavLinksAdmin items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>
     </Sidebar>
