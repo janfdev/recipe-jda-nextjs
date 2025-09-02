@@ -40,7 +40,7 @@ export default function ProfilePage() {
   }, []);
 
   return (
-    <div className="flex flex-col px-6">
+    <div className="flex flex-col px-6 mt-7">
       <div className="flex mb-8 justify-start">
         <Breadcrumb>
           <BreadcrumbList>
@@ -67,7 +67,7 @@ export default function ProfilePage() {
 
           <CardContent className="p-6 space-y-6">
             <div className="flex flex-col items-center gap-4">
-              <Avatar className="w-24 h-24 border-2 border-primary">
+              <Avatar className="w-24 h-24 border-5 border-primary">
                 {user?.image ? (
                   <AvatarImage src={user.image} alt="User Avatar" />
                 ) : (
