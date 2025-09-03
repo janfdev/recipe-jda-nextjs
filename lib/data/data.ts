@@ -44,12 +44,12 @@ export const data = {
   navUser: [
     {
       title: "Profile",
-      url: "/user/my-profile",
+      url: "/profile",
       icon: User
     },
     {
       title: "Komentar Saya",
-      url: "/user/my-comment",
+      url: "/profile/comments",
       icon: MessageCircleHeart
     }
   ]

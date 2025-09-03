@@ -50,7 +50,7 @@ export default function ProfilePage() {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage className="font-semibold">
-                My Profile
+                Profil Saya
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>

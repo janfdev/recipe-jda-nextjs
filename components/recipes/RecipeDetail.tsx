@@ -5,10 +5,40 @@ import { AlarmClockCheck, ChefHat, Clock, Star, Users } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import RecipeActionButtons from "./RecipeActionsButton";
 import RecipeDetailsSkeleton from "./skeleton/RecipeDetailsSkeleton";
+import { Heart, Share2 } from "lucide-react";
+import { Button } from "../ui/button";
+import { usePathname } from "next/navigation";
+import { toast } from "react-toastify";
+import { useState, useTransition } from "react";
+import axiosInstance from "@/lib/axios";
 
-export default function RecipeDetailComponent({ id }: { id: string }) {
+type RecipeDetail = {
+  id: string;
+  recipeId: string;
+  initialSaved: boolean;
+  initialCount: number;
+};
+
+type PropsSaveRecipe = {
+  recipeId: string;
+  initialSaved: boolean;
+  initialCount: number;
+};
+
+export default function RecipeDetailComponent({
+  id,
+  recipeId,
+  initialSaved,
+  initialCount
+}: RecipeDetail) {
+  const pathname = usePathname();
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(`${window.location.origin}${pathname}`);
+    toast.success("Link berhasil disalin");
+  };
+
   const { recipe, loading } = useRecipe(id);
 
   if (loading) return <RecipeDetailsSkeleton />;
@@ -64,7 +94,17 @@ export default function RecipeDetailComponent({ id }: { id: string }) {
             </div>
 
             {/* Action Buttons */}
-            <RecipeActionButtons />
+            <div className="flex flex-wrap gap-3">
+              <SaveRecipeButton
+                recipeId={recipeId}
+                initialSaved={initialSaved}
+                initialCount={initialCount}
+              />
+              <Button variant="outline" onClick={handleShare}>
+                <Share2 className="h-4 w-4 mr-2" />
+                Share
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -171,5 +211,64 @@ export default function RecipeDetailComponent({ id }: { id: string }) {
         </div>
       </div>
     </section>
+  );
+}
+
+export function SaveRecipeButton({
+  recipeId,
+  initialSaved,
+  initialCount
+}: PropsSaveRecipe) {
+  const [saved, setSaved] = useState(initialSaved);
+  const [count, setCount] = useState(initialCount);
+  const [isPending, startTransition] = useTransition();
+
+  const toggleSave = () => {
+    startTransition(async () => {
+      // Hitung nilai baru dulu
+      const nextSaved = !saved;
+      const nextCount = count + (nextSaved ? 1 : -1);
+
+      // Optimistic Update
+      setSaved(nextSaved);
+      setCount(nextCount);
+
+      try {
+        const res = await axiosInstance.request({
+          url: `/api/recipes/${recipeId}/save`,
+          method: nextSaved ? "POST" : "DELETE"
+        });
+
+        const data = res.data();
+
+        if (typeof data.saved === "boolean") setSaved(data.saved);
+        if (typeof data.savedCount === "number") setCount(data.savedCount);
+        toast.success(nextSaved ? "Added to saved" : "Remove from saved");
+      } catch (err: unknown) {
+        console.error("Save error:", err);
+        // rollback
+        setSaved(!nextSaved);
+        setCount(count);
+        // user belum login
+        if (err?.response.status === 401) {
+          toast.error("Silahkan login untuk menyimpan resep");
+        } else {
+          toast.error("Gagal menyimpan resep");
+        }
+      }
+    });
+  };
+
+  return (
+    <Button
+      disabled={isPending}
+      onClick={toggleSave}
+      variant={saved ? "default" : "secondary"}
+    >
+      <Heart
+        className={`mr-2 h-4 w-4 ${saved ? "fill-current text-red-500" : ""}`}
+      />
+      {saved ? "Saved" : "Save Recipe"} - {count}
+    </Button>
   );
 }

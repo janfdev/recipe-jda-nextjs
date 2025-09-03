@@ -78,7 +78,7 @@ export const AvatarUser = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link
-            href="/user/my-profile"
+            href="/profile"
             className="w-full flex items-center cursor-pointer"
           >
             <User className="mr-2 h-4 w-4" />
@@ -87,7 +87,7 @@ export const AvatarUser = () => {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link
-            href="/user/my-comment"
+            href="/profile/comments"
             className="flex items-center cursor-pointer"
           >
             <MessageSquare className="mr-2 h-4 w-4" />

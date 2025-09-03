@@ -47,7 +47,7 @@ export default function MyComment() {
 
   const fetchMyComments = async () => {
     try {
-      const res = await axiosInstance.get("/api/my-comments");
+      const res = await axiosInstance.get("/api/user/me/comments");
       setComments(res.data.data);
     } catch (error) {
       console.error("Gagal fetch komentar sendiri", error);
@@ -70,7 +70,7 @@ export default function MyComment() {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage className="font-semibold">
-              My Comment
+              Komentar Saya
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
