@@ -1,5 +1,6 @@
 import { CategoryTypes } from "../types/type";
 import {
+  BookmarkCheckIcon,
   ChartBarStacked,
   Home,
   MessageCircleHeart,
@@ -51,6 +52,11 @@ export const data = {
       title: "Komentar Saya",
       url: "/profile/comments",
       icon: MessageCircleHeart
+    },
+    {
+      title: "Resep Disimpan",
+      url: "/profile/saved-recipe",
+      icon: BookmarkCheckIcon
     }
   ]
 };

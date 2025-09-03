@@ -79,10 +79,14 @@ model SavedRecipe {
   id       String @id @default(cuid())
   userId   String
   recipeId String
+  createdAt DateTime @default(now())
+
   recipe   Recipe @relation(fields: [recipeId], references: [id])
   user     User   @relation(fields: [userId], references: [id])
 
   @@unique([userId, recipeId])
+  @@index([recipeId])
+  @@index([userId])
 }
 
 model Comment {

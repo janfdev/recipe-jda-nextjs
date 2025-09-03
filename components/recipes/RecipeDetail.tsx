@@ -239,11 +239,11 @@ export function SaveRecipeButton({
           method: nextSaved ? "POST" : "DELETE"
         });
 
-        const data = res.data();
+        const data = res.data;
+        toast.success(nextSaved ? "Added to saved" : "Remove from saved");
 
         if (typeof data.saved === "boolean") setSaved(data.saved);
         if (typeof data.savedCount === "number") setCount(data.savedCount);
-        toast.success(nextSaved ? "Added to saved" : "Remove from saved");
       } catch (err: unknown) {
         console.error("Save error:", err);
         // rollback

@@ -15,7 +15,7 @@ export async function GET() {
     }
 
     const comments = await prisma.comment.findMany({
-      take: 4,
+      take: 3,
       orderBy: { createdAt: "desc" },
       include: {
         user: { select: { name: true, image: true } },
