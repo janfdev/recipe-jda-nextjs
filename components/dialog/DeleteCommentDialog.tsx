@@ -32,7 +32,7 @@ export function DeleteCommentDialog({
 
     setLoading(true);
     try {
-      await axiosInstance.delete(`/api/my-comments/${commentId}`);
+      await axiosInstance.delete(`/api/user/me/comments/${commentId}`);
       toast.success("Komentar berhasil dihapus");
       onDeleted();
       onClose();

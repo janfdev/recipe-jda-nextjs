@@ -135,7 +135,7 @@ export default function MyComment() {
                       variant="destructive"
                       onClick={() => {
                         setSelectedComment(comment);
-                        setEditOpen(true);
+                        setDeleteOpen(true);
                       }}
                     >
                       <Trash2 className="h-4 w-4" />

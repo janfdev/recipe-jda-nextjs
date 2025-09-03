@@ -46,7 +46,7 @@ export function EditCommentDialog({
 
     setLoading(true);
     try {
-      await axiosInstance.patch(`/api/my-comments/${comment.id}`, {
+      await axiosInstance.patch(`/api/user/me/comments/${comment.id}`, {
         content: newContent
       });
       toast.success("Komentar berhasil diubah");

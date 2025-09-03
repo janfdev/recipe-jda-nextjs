@@ -12,6 +12,17 @@ import { usePathname } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState, useTransition } from "react";
 import axiosInstance from "@/lib/axios";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from "@/components/ui/alert-dialog";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type RecipeDetail = {
   id: string;
@@ -33,13 +44,12 @@ export default function RecipeDetailComponent({
   initialCount
 }: RecipeDetail) {
   const pathname = usePathname();
+  const { recipe, loading } = useRecipe(id);
 
   const handleShare = () => {
     navigator.clipboard.writeText(`${window.location.origin}${pathname}`);
     toast.success("Link berhasil disalin");
   };
-
-  const { recipe, loading } = useRecipe(id);
 
   if (loading) return <RecipeDetailsSkeleton />;
 
@@ -221,9 +231,16 @@ export function SaveRecipeButton({
 }: PropsSaveRecipe) {
   const [saved, setSaved] = useState(initialSaved);
   const [count, setCount] = useState(initialCount);
+  const { data: session } = useSession();
+  const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const toggleSave = () => {
+    if (!session) {
+      setShowLoginModal(true);
+      return;
+    }
     startTransition(async () => {
       // Hitung nilai baru dulu
       const nextSaved = !saved;
@@ -240,7 +257,7 @@ export function SaveRecipeButton({
         });
 
         const data = res.data;
-        toast.success(nextSaved ? "Added to saved" : "Remove from saved");
+        toast.success(nextSaved ? "Tersimpan" : "Resep Batal disimpan");
 
         if (typeof data.saved === "boolean") setSaved(data.saved);
         if (typeof data.savedCount === "number") setCount(data.savedCount);
@@ -254,15 +271,36 @@ export function SaveRecipeButton({
   };
 
   return (
-    <Button
-      disabled={isPending}
-      onClick={toggleSave}
-      variant={saved ? "default" : "secondary"}
-    >
-      <Heart
-        className={`mr-2 h-4 w-4 ${saved ? "fill-current text-red-500" : ""}`}
-      />
-      {saved ? "Saved" : "Save Recipe"} - {count}
-    </Button>
+    <>
+      <Button
+        disabled={isPending}
+        onClick={toggleSave}
+        variant={saved ? "default" : "secondary"}
+      >
+        <Heart
+          className={`mr-2 h-4 w-4 ${saved ? "fill-current text-red-500" : ""}`}
+        />
+        {saved ? "Disimpan" : "Simpan Resep"} - {count}
+      </Button>
+
+      <AlertDialog open={showLoginModal} onOpenChange={setShowLoginModal}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Login Diperlukan</AlertDialogTitle>
+            <p className="text-sm text-muted-foreground">
+              Anda harus login terlebih dahulu untuk menyimpan resep
+            </p>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setShowLoginModal(false)}>
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={() => router.push("/login")}>
+              Login
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
