@@ -1,29 +1,30 @@
-# **ReciVerse**
+# ReciVerse
 
-ReciVerse is a full-stack recipe sharing application built with the Next.js App Router, Prisma, and Tailwind CSS. It features a complete user authentication system, a dedicated admin dashboard for content management, and a beautiful, responsive interface for users to browse and interact with recipes.
+ReciVerse is a full-stack recipe sharing application built with the Next.js App Router, Prisma, and Tailwind CSS. It features a complete user authentication system, a dedicated admin dashboard for content management, and a beautiful, responsive interface for users to browse, save, and interact with recipes.
 
 ## ✨ Features
 
-- **User Authentication:** Secure user registration and login powered by NextAuth.js.
-- **Admin Dashboard:** A comprehensive, protected dashboard for administrators to manage site content, including recipes, categories, and view user comments.
-- **Full Recipe CRUD:** Admins have complete control to create, read, update, and delete recipes.
-- **Dynamic Category Management:** Easily add, edit, and delete recipe categories.
-- **Cloud-Based Image Uploads:** Seamless image handling for recipes and user profiles using Cloudinary.
-- **Interactive Commenting:** Registered users can engage with recipes by leaving comments.
-- **Advanced Recipe Browsing:** Soon Feature.
-- **User Profile Management:** Now Admin and user can update name and profile.
-- **Modern UI/UX:** Built with shadcn/ui and Tailwind CSS, featuring a responsive design and a dark/light mode toggle.
+*   **User Authentication:** Secure user registration and login powered by NextAuth.js.
+*   **Admin Dashboard:** A comprehensive, protected dashboard for administrators to manage site content, including recipes, categories, and user comments.
+*   **Full Recipe CRUD:** Admins have complete control to create, read, update, and delete recipes.
+*   **Dynamic Category Management:** Easily add, edit, and delete recipe categories.
+*   **Cloud-Based Image Uploads:** Seamless image handling for recipes and user profiles using Cloudinary.
+*   **Interactive User Experience:**
+    *   Registered users can save their favorite recipes.
+    *   Engage with recipes by leaving comments.
+*   **User Profile Management:** Users and admins can update their name and profile picture.
+*   **Modern UI/UX:** Built with shadcn/ui and Tailwind CSS, featuring a responsive design and a dark/light mode toggle.
 
 ## 🛠️ Tech Stack
 
-- **Framework:** [Next.js](https://nextjs.org/) (with App Router & Turbopack)
-- **Database ORM:** [Prisma](https://www.prisma.io/)
-- **Database:** [PostgreSQL](https://www.postgresql.org/)
-- **Authentication:** [NextAuth.js](https://next-auth.js.org/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **UI Components:** [shadcn/ui](https://ui.shadcn.com/)
-- **Image Management:** [Cloudinary](https://cloudinary.com/)
-- **Deployment:** [Vercel](https://vercel.com/)
+*   **Framework:** [Next.js](https://nextjs.org/) (with App Router & Turbopack)
+*   **Database ORM:** [Prisma](https://www.prisma.io/)
+*   **Database:** [PostgreSQL](https://www.postgresql.org/)
+*   **Authentication:** [NextAuth.js](https://next-auth.js.org/)
+*   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+*   **UI Components:** [shadcn/ui](https://ui.shadcn.com/)
+*   **Image Management:** [Cloudinary](https://cloudinary.com/)
+*   **Deployment:** [Vercel](https://vercel.com/)
 
 ## 🚀 Getting Started
 
@@ -55,7 +56,7 @@ cp .env.example .env
 Now, open the `.env` file and fill in the required values.
 
 ```env
-# PostgreSQL connection string
+# PostgreSQL connection string from your database provider
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
 
 # NextAuth secret key (generate a random string)
@@ -91,11 +92,6 @@ To create a default admin user, run the seed script.
 npx prisma db seed
 ```
 
-The default admin credentials will be:
-
-- **Email:** `admin@gmail.com`
-- **Password:** `admin123456`
-
 ### 6. Run the Development Server
 
 You can now start the application.
@@ -112,31 +108,33 @@ The project follows a feature-driven structure within the Next.js App Router par
 
 ```
 /
-├── app/                  # Main application source
-│   ├── (auth)/           # Authentication routes (login, register)
-│   ├── admin/            # Protected admin dashboard routes
-│   ├── api/              # API endpoints for backend logic
-│   ├── recipes/          # Public recipe browsing pages
-│   └── user/             # Protected user-specific routes (profile, etc.)
+├── app/                      # Main application source
+│   ├── (account)/            # Protected user account routes (profile, saved recipes)
+│   ├── (auth)/               # Authentication routes (login, register)
+│   ├── admin/                # Protected admin dashboard routes
+│   ├── api/                  # API endpoints for backend logic
+│   ├── recipes/              # Public recipe browsing and detail pages
+│   └── ...
 │
-├── components/           # Reusable React components
-│   ├── admin/            # Components specific to the admin dashboard
-│   ├── layout/           # Shared layout components (Header, Footer)
-│   ├── recipes/          # Components related to recipe display
-│   └── ui/               # UI primitives from shadcn/ui
+├── components/               # Reusable React components
+│   ├── dialog/               # Dialog components (edit, delete)
+│   ├── layout/               # Shared layout components (Header, Footer)
+│   ├── recipes/              # Components related to recipe display and interaction
+│   ├── section/              # Large page sections (Hero, Browse)
+│   └── ui/                   # UI primitives from shadcn/ui
 │
-├── hooks/                # Custom React hooks for data fetching and logic
+├── hooks/                    # Custom React hooks for data fetching and logic
 │
-├── lib/                  # Shared libraries, helpers, and configurations
-│   ├── auth.ts           # NextAuth.js configuration
-│   ├── cloudinary.ts     # Cloudinary SDK configuration and helpers
-│   ├── prisma.ts         # Prisma client instance
-│   └── types/            # TypeScript type definitions
+├── lib/                      # Shared libraries, helpers, and configurations
+│   ├── auth.ts               # NextAuth.js configuration
+│   ├── cloudinary.ts         # Cloudinary SDK configuration and helpers
+│   ├── prisma.ts             # Prisma client instance
+│   └── data/                 # Static data like navigation links
+│   └── types/                # TypeScript type definitions
 │
-├── middleware/           # Edge middleware for route protection
+├── middleware.ts             # Edge middleware for route protection (e.g., /admin)
 │
-└── prisma/               # Database configuration
-    ├── migrations/       # Database migration history
-    ├── schema.prisma     # The single source of truth for your DB schema
-    └── seed.ts           # Script to seed the database with initial data
-```
+└── prisma/                   # Database configuration
+    ├── migrations/           # Database migration history
+    ├── schema.prisma         # The single source of truth for your DB schema
+    └── seed.ts               # Script to seed the database with initial data
