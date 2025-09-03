@@ -249,12 +249,6 @@ export function SaveRecipeButton({
         // rollback
         setSaved(!nextSaved);
         setCount(count);
-        // user belum login
-        if (err?.response.status === 401) {
-          toast.error("Silahkan login untuk menyimpan resep");
-        } else {
-          toast.error("Gagal menyimpan resep");
-        }
       }
     });
   };
