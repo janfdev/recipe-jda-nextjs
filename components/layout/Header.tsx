@@ -96,7 +96,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden items-center space-x-4 lg:flex">
+          <div className="hidden items-center space-x-4 md:flex">
             <ModeToggle />
             <span className="flex items-center gap-3">
               {session?.user ? (
@@ -130,22 +130,21 @@ export default function Header() {
             </span>
           </div>
 
-          <motion.button
-            className="flex items-center gap-4 hover:bg-muted rounded-lg p-2 transition-colors duration-200 lg:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            whileTap={{ scale: 0.95 }}
-          >
+          <div className="flex items-center gap-4 md:hidden ">
             {session?.user.role === "ADMIN" ? <AvatarAdmin /> : <AvatarUser />}
-            {isMobileMenuOpen ? (
-              <>
+
+            <motion.button
+              className="flex items-center hover:bg-muted rounded-lg p-2 transition-colors duration-200"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              whileTap={{ scale: 0.95 }}
+            >
+              {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
-              </>
-            ) : (
-              <div className="flex items-center gap-x-2">
+              ) : (
                 <Menu className="h-6 w-6" />
-              </div>
-            )}
-          </motion.button>
+              )}
+            </motion.button>
+          </div>
         </div>
 
         <AnimatePresence>

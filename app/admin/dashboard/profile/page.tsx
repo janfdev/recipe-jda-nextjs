@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Pencil } from "lucide-react";
+import { CircleCheck, Pencil } from "lucide-react";
 
 type UserProfile = {
   id: string;
@@ -29,7 +29,7 @@ export default function ProfilePage() {
   const getProfile = async () => {
     try {
       const res = await axiosInstance.get("/api/user/me");
-      setUser(res.data.data);
+      setUser(res.data.data.user);
     } catch (error) {
       console.error("Gagal mengambil data user", error);
     }
@@ -77,10 +77,16 @@ export default function ProfilePage() {
                 )}
               </Avatar>
 
-              <div className="flex flex-col ">
+              <div className="flex flex-col items-center">
+                <div className="flex items-center gap-2 bg-transparent border-2 border-primary rounded-full py-1 px-5">
+                  <CircleCheck className="text-green-500 size-5" /> Admin Baik
+                </div>
+
                 <div className="space-y-1 ">
                   <p className="text-sm text-muted-foreground">Nama</p>
-                  <h2 className="text-lg font-semibold">{user?.name || "-"}</h2>
+                  <h2 className="text-lg font-semibold capitalize">
+                    {user?.name || "-"}
+                  </h2>
                 </div>
 
                 <div className="space-y-1">

@@ -90,7 +90,6 @@ export default function ProfilePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Kirim nilai yang berubah
     const payload: Record<string, string> = {};
     if (name !== (user?.name ?? "")) payload.name = name;
     if (avatarUrl && avatarUrl !== (user?.image ?? ""))
@@ -115,7 +114,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-5">
       <div className="flex px-8 mb-8 justify-start ">
         <Breadcrumb>
           <BreadcrumbList>
@@ -124,7 +123,7 @@ export default function ProfilePage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="/user/my-profile">
+              <BreadcrumbLink href="/profile">
                 My Profile
               </BreadcrumbLink>
             </BreadcrumbItem>

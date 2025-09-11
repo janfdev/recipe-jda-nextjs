@@ -38,7 +38,7 @@ export const AvatarUser = () => {
       try {
         setIsLoading(true);
         const res = await axios.get("/api/user/me");
-        setUserInfo(res.data.data);
+        setUserInfo(res.data.data.user);
       } catch (error) {
         console.error("Failed to fetch user:", error);
       } finally {
@@ -92,6 +92,15 @@ export const AvatarUser = () => {
           >
             <MessageSquare className="mr-2 h-4 w-4" />
             <span>Komentar Saya</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href="/profile/saved-recipe"
+            className="flex items-center cursor-pointer"
+          >
+            <MessageSquare className="mr-2 h-4 w-4" />
+            <span>Resep Disimpan</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

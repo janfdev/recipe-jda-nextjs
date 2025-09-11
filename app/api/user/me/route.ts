@@ -3,27 +3,33 @@ import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-// GET user profile
 export async function GET() {
   const session = await getServerSession(authOptions);
 
-  if (!session || !session.user?.email) {
+  if (!session || !session.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const user = await prisma.user.findUnique({
-    where: { email: session.user.email as string },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      image: true,
-      role: true
-    }
-  });
+  const userId = session.user.id;
+
+  const [user, commentsCount, savedCount] = await Promise.all([
+    prisma.user.findUnique({
+      where: {
+        id: userId
+      },
+      select: { id: true, name: true, email: true, image: true }
+    }),
+    prisma.comment.count({ where: { userId } }),
+    prisma.savedRecipe.count({ where: { userId } })
+  ]);
 
   return NextResponse.json({
-    success: true,
-    data: user
+    data: {
+      user,
+      stats: {
+        commentsCount,
+        savedCount
+      }
+    }
   });
 }
