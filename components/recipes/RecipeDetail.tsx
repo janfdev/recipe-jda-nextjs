@@ -242,7 +242,6 @@ export function SaveRecipeButton({
       return;
     }
     startTransition(async () => {
-      // Hitung nilai baru dulu
       const nextSaved = !saved;
       const nextCount = count + (nextSaved ? 1 : -1);
 

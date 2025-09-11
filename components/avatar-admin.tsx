@@ -35,7 +35,7 @@ export const AvatarAdmin = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get("/api/user/me");
-        setUserInfo(res.data.data);
+        setUserInfo(res.data.data.user);
       } catch (error) {
         console.error("Failed to fetch user:", error);
       }
