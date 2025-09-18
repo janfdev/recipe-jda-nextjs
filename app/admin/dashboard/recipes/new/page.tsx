@@ -29,8 +29,8 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Minus, X } from "lucide-react";
 import { ImageUpload } from "@/components/ui/upload-image";
 
-type Instruction = { id: string; step: number; description: string };
-type IngredientRow = { id: string; text: string };
+export type Instruction = { id: string; step: number; description: string };
+export type IngredientRow = { id: string; text: string };
 
 const Page = () => {
   const [, setRecipes] = useState<RecipeDetailType[]>([]);

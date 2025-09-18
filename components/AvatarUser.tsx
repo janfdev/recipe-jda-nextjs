@@ -11,7 +11,7 @@ import {
   DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
 import axios from "axios";
-import { LogOut, MessageSquare, User } from "lucide-react";
+import { BookmarkCheck, LogOut, MessageSquare, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { Skeleton } from "./ui/skeleton";
@@ -99,7 +99,7 @@ export const AvatarUser = () => {
             href="/profile/saved-recipe"
             className="flex items-center cursor-pointer"
           >
-            <MessageSquare className="mr-2 h-4 w-4" />
+            <BookmarkCheck className="mr-2 h-4 w-4" />
             <span>Resep Disimpan</span>
           </Link>
         </DropdownMenuItem>

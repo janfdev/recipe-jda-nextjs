@@ -13,7 +13,7 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { ChefHat, CircleCheck, Pencil, Send } from "lucide-react";
+import { BookmarkCheck, CircleCheck, Pencil, Send } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
@@ -131,7 +131,7 @@ export default function ProfilePage() {
                   bg-gradient-to-br from-amber-800 via-amber-500 to-amber-500 
                   text-white items-center justify-center"
               >
-                <ChefHat className="w-6 h-6" />
+                <BookmarkCheck className="w-6 h-6" />
                 <h3 className="font-semibold">Resep Disimpan</h3>
                 <h4 className="text-lg font-bold">{stats.savedCount}</h4>
               </div>

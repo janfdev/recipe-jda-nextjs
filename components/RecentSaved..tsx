@@ -3,6 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
+import { Card } from "./ui/card";
 
 export default async function SavedRecipeLeaderboard() {
   const session = await getServerSession(authOptions);
@@ -22,7 +23,7 @@ export default async function SavedRecipeLeaderboard() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <Card className="container mx-auto px-4 py-8">
       <h1 className="mb-6 text-2xl font-bold">Top Saved Recipes</h1>
       <table className="w-full table-auto border-collapse text-sm">
         <thead className="text-left">
@@ -58,6 +59,6 @@ export default async function SavedRecipeLeaderboard() {
           ))}
         </tbody>
       </table>
-    </div>
+    </Card>
   );
 }

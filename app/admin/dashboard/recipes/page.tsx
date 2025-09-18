@@ -110,11 +110,12 @@ export default function AdminRecipesPage() {
                 </TableCell>
                 <TableCell className="flex items-center justify-center gap-x-5">
                   <Link href={`recipes/edit/${r.id}`}>
-                    <Button size={"icon"}>
+                    <Button size={"icon"} className="cursor-pointer">
                       <Pencil className="text-white" />
                     </Button>
                   </Link>
                   <Button
+                    className="cursor-pointer"
                     onClick={() => handleDelete(r.id)}
                     variant={"destructive"}
                     size={"icon"}
@@ -122,7 +123,7 @@ export default function AdminRecipesPage() {
                     <Trash />
                   </Button>
                   <Link href={`recipes/details/${r.id}`}>
-                    <Button size={"icon"}>
+                    <Button size={"icon"} className="cursor-pointer">
                       <Ellipsis className="text-white" />
                     </Button>
                   </Link>

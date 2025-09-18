@@ -9,7 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
-import { Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -107,70 +107,92 @@ export default function MyComment() {
             </p>
           ) : (
             comments.map((comment) => (
-              <Card key={comment.id}>
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="flex items-center gap-2 text-lg">
+              <Card
+                key={comment.id}
+                className="overflow-hidden border bg-card hover:shadow-md transition-shadow"
+              >
+                <div className="p-4 md:p-5">
+                  <div className="grid gap-4 md:grid-cols-[160px_1fr] items-start">
+                    <div className="relative">
+                      <Link href={`/recipes/details/${comment.recipe.id}`}>
                         <Image
                           src={comment.recipe?.image}
                           alt={comment.recipe.title}
-                          width={50}
-                          height={50}
-                          className="rounded"
+                          width={160}
+                          height={120}
+                          className="rounded-md object-cover w-full h-[120px]"
                         />
-                        <Link
-                          href={`/recipes/details/${comment.recipe.id}`}
-                          className="hover:text-orange-600 transition-colors"
-                        >
-                          Resep : {comment.recipe.title}
-                        </Link>
-                      </CardTitle>
-                      <p className="text-sm text-gray-500 mt-1">
-                        Commented: {formatDateWithTime(comment.createdAt)}
-                      </p>
+                      </Link>
                     </div>
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => {
-                        setSelectedComment(comment);
-                        setDeleteOpen(true);
-                      }}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-start gap-3">
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage
-                        src={comment.user?.image || "/placeholder.svg"}
-                        alt="Avatar"
-                      />
-                      <AvatarFallback>
-                        {comment.user?.name?.charAt(0) || "?"}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <p className="text-gray-700 mb-3">{comment.content}</p>
-                      <div className="flex items-center gap-4 text-sm text-gray-500">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-auto p-0 text-orange-600"
-                          onClick={() => {
-                            setSelectedComment(comment);
-                            setEditOpen(true);
-                          }}
-                        >
-                          Edit
-                        </Button>
+
+                    <div className="space-y-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <CardTitle className="text-base md:text-lg leading-tight">
+                            <Link
+                              href={`/recipes/details/${comment.recipe.id}`}
+                              className="hover:text-primary transition-colors line-clamp-2"
+                            >
+                              Resep: {comment.recipe.title}
+                            </Link>
+                          </CardTitle>
+                          <p className="text-xs md:text-sm text-muted-foreground mt-1">
+                            Komentar tanggal:{" "}
+                            {formatDateWithTime(comment.createdAt)}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="gap-2"
+                            onClick={() => {
+                              setSelectedComment(comment);
+                              setEditOpen(true);
+                            }}
+                          >
+                            <Pencil className="h-4 w-4" />
+                            <span className="hidden sm:inline">Edit</span>
+                          </Button>
+
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => {
+                              setSelectedComment(comment);
+                              setDeleteOpen(true);
+                            }}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-3">
+                        <Avatar className="h-9 w-9">
+                          <AvatarImage
+                            src={comment.user?.image || "/placeholder.svg"}
+                            alt={comment.user?.name || "Avatar"}
+                          />
+                          <AvatarFallback>
+                            {comment.user?.name?.charAt(0) || "?"}
+                          </AvatarFallback>
+                        </Avatar>
+
+                        <div className="flex-1">
+                          <h2 className="text-sm font-medium text-foreground">
+                            {comment.user.name}
+                          </h2>
+
+                          <p className="text-sm md:text-[15px] leading-relaxed text-foreground mt-1">
+                            {comment.content}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </CardContent>
+                </div>
               </Card>
             ))
           )}
