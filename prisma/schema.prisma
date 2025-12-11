@@ -103,3 +103,71 @@ enum Role {
   ADMIN
   USER
 }
+
+
+model Person {
+  id           String              @id @default(cuid())
+  name         String
+  title        String?             // mis. "AI Engineer"
+  org          String?             // mis. "Acme"
+  avatarUrl    String?
+  events       EventParticipant[]
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+}
+
+// Role partisipan di event
+enum ParticipantRole {
+  SPEAKER
+  MODERATOR
+}
+
+model EventParticipant {
+  id        String           @id @default(cuid())
+  eventId   String
+  personId  String
+  role      ParticipantRole
+  talkTitle String          // judul materi utk speaker
+  sortOrder Int?             // urutan tampil per role
+  event     Event            @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  person    Person           @relation(fields: [personId], references: [id], onDelete: Restrict)
+
+  // Satu orang boleh punya >1 role pada event yang sama (mis. SPEAKER & PANELIST),
+  // tapi unik per (event, person, role)
+  @@unique([eventId, personId, role])
+}
+
+model Event {
+  id         String           @id @default(cuid())
+  title      String
+  startsAt   DateTime         
+  endsAt     DateTime
+  timezone   String           
+  participants EventParticipant[]
+  benefits     EventBenefit[]
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+}
+
+model Benefit {
+  id                 String          @id @default(cuid())
+  key                String          @unique
+  label              String
+  defaultDescription String?
+  iconUrl            String?
+  events             EventBenefit[]
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+}
+
+model EventBenefit {
+  id                 String   @id @default(cuid())
+  eventId            String
+  benefitId          String
+  customDescription  String?
+  isIncluded         Boolean  @default(true)
+  sortOrder          Int?
+  event              Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  benefit            Benefit  @relation(fields: [benefitId], references: [id], onDelete: Restrict)
+  @@unique([eventId, benefitId])
+}
