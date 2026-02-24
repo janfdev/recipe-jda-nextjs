@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import prisma from "@/lib/prisma";
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-  name: z.string().min(5)
+  email: z.string().email("Email tidak valid"),
+  password: z.string().min(6, "Password minimal 6 karakter"),
+  name: z.string().min(5, "Nama minimal 5 karakter")
 });
 
 export async function POST(req: Request) {
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
           message: "User already exists"
         },
         {
-          status: 400
+          status: 409 // 409 Conflict — lebih semantis untuk duplikat data
         }
       );
     }
@@ -51,10 +51,20 @@ export async function POST(req: Request) {
       }
     );
   } catch (err) {
+    if (err instanceof ZodError) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: err.issues[0]?.message ?? "Data tidak valid"
+        },
+        { status: 400 }
+      );
+    }
     console.error("Signup error:", err);
     return NextResponse.json(
       {
-        error: "Registration failed"
+        success: false,
+        message: "Registration failed"
       },
       {
         status: 500

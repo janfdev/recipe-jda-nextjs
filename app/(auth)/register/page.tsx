@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,7 +23,7 @@ import { z } from "zod";
 const registerSchema = z.object({
   name: z.string().min(5, "Nama minimal 5 karakter"),
   email: z.string().email("Email tidak valid"),
-  password: z.string().min(6, "Password minimal 6 karakter")
+  password: z.string().min(6, "Password minimal 6 karakter"),
 });
 
 const Page = () => {
@@ -51,7 +51,7 @@ const Page = () => {
     const validation = registerSchema.safeParse({
       name: registerName,
       email: registerEmail,
-      password: registerPassword
+      password: registerPassword,
     });
 
     if (!validation.success) {
@@ -66,7 +66,7 @@ const Page = () => {
       const res = await axiosInstance.post("/api/auth/signup", {
         name: registerName,
         email: registerEmail,
-        password: registerPassword
+        password: registerPassword,
       });
 
       if (res.data.success) {
@@ -76,18 +76,29 @@ const Page = () => {
           redirect: true,
           email: registerEmail,
           password: registerPassword,
-          callbackUrl: "/"
+          callbackUrl: "/",
         });
-      } else {
-        if (res.data.message === "User already exists") {
-          toast.error("Email sudah terdaftar, silakan login");
-        } else {
-          toast.error("Registrasi gagal");
-        }
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Terjadi kesalahan server");
+    } catch (error: unknown) {
+      // Axios melempar error untuk status >= 400
+      if (error && typeof error === "object" && "response" in error) {
+        const axiosError = error as {
+          response: { status: number; data: { message?: string } };
+        };
+        const status = axiosError.response?.status;
+        const message = axiosError.response?.data?.message;
+
+        if (status === 409 || message === "User already exists") {
+          toast.error("Email sudah terdaftar, silakan login");
+        } else if (status === 400) {
+          toast.error(message ?? "Data tidak valid");
+        } else {
+          toast.error("Terjadi kesalahan server");
+        }
+      } else {
+        console.error(error);
+        toast.error("Terjadi kesalahan server");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -108,7 +119,8 @@ const Page = () => {
           Please input your name, email
         </CardDescription>
         <CardContent>
-          <form>
+          {/* ✅ onSubmit ada di form, bukan di Button */}
+          <form onSubmit={handleRegister}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="name">Username</Label>
@@ -143,17 +155,18 @@ const Page = () => {
                   required
                 />
               </div>
+              {/* ✅ Button type=submit dipindahkan ke dalam form */}
+              <Button
+                type="submit"
+                className="w-full cursor-pointer"
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : "Register"}
+              </Button>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button
-            type="submit"
-            className="w-full cursor-pointer"
-            onClick={handleRegister}
-          >
-            {isLoading ? "Loading..." : "Register"}
-          </Button>
           <span className="text-sm flex items-center gap-1">
             Already have an account?
             <Link
